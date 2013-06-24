@@ -10,4 +10,9 @@
 
 @interface ViewController : UIViewController
 
+{
+  @private
+  UIWebView* webView;
+}
+
 @end

@@ -17,7 +17,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // create WebView
+    webView = [[UIWebView alloc] init];
+    webView.frame = self.view.bounds;
+    webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    webView.scalesPageToFit = YES;
+    [self.view addSubview:webView];
+    // generate a request
+    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://sunny.akafune.com"]];
+    [webView loadRequest:request];
 }
 
 - (void)didReceiveMemoryWarning
