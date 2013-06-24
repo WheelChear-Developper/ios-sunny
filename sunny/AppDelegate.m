@@ -12,7 +12,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+
     return YES;
 }
 							
@@ -43,4 +44,36 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)applicationDidFinishLaunching:(UIApplication *)application {
+    NSLog(@"applicationDidFinishLaunching");
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+}
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)devToken {
+    NSMutableString *tokenId = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@",devToken]];
+    [tokenId setString:[tokenId stringByReplacingOccurrencesOfString:@" " withString:@""]]; //余計な文字を消す
+    [tokenId setString:[tokenId stringByReplacingOccurrencesOfString:@"<" withString:@""]];
+    [tokenId setString:[tokenId stringByReplacingOccurrencesOfString:@">" withString:@""]];
+
+    NSLog(@"deviceToken: %@", tokenId);
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError*)err {
+    NSLog(@"Error in registration: %@", err);
+}
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithError:(NSError *)err {
+    NSLog(@"didRegisterForRemoteNotificationsWithError; error: %@", err);
+}
+
+// プッシュ通知を受信した際の処理
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+#if !TARGET_IPHONE_SIMULATOR
+    NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
+    NSString *alert = [apsInfo objectForKey:@"alert"];
+    NSString *sound = [apsInfo objectForKey:@"sound"];
+    NSString *badge = [apsInfo objectForKey:@"badge"];
+    application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
+#endif
+}
 @end
