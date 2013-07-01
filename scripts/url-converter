@@ -3,3 +3,5 @@
 URL=$(cat scripts/env | grep 'url:' | awk '{print $2}')
 mv sunny/ViewController.m sunny/ViewController.m.bk
 sed -e "s|http://sunny.akafune.com|${URL}|" sunny/ViewController.m.bk > sunny/ViewController.m
+mv sunny/AppDelegate.m sunny/AppDelegate.m.bk
+sed -e "s|http://sunny.akafune.com|${URL}|" sunny/AppDelegate.m.bk > sunny/AppDelegate.m
