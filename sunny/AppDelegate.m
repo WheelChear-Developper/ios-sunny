@@ -55,7 +55,8 @@
     [tokenId setString:[tokenId stringByReplacingOccurrencesOfString:@"<" withString:@""]];
     [tokenId setString:[tokenId stringByReplacingOccurrencesOfString:@">" withString:@""]];
 
-    NSLog(@"deviceToken: %@", tokenId);
+    NSString *deviceToken = tokenId;
+    [self sendProviderDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError*)err {
@@ -64,6 +65,22 @@
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithError:(NSError *)err {
     NSLog(@"didRegisterForRemoteNotificationsWithError; error: %@", err);
+}
+
+- (void)sendProviderDeviceToken:(NSString *)token {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://sunny.akafune.com/apns_devices"]];
+
+    NSString *requestBody = [@"apns_device[token]=" stringByAppendingString:token];
+
+    [request setHTTPMethod:@"POST"];
+
+    [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
+
+    NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
+
+    if (connection) {
+        // start loading
+    }
 }
 
 // プッシュ通知を受信した際の処理
