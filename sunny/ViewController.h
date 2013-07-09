@@ -13,6 +13,7 @@
 {
   @private
   UIWebView* webView;
+  bool launchedFirst;
 }
 
 @end
