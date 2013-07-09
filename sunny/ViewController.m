@@ -26,6 +26,22 @@
     // generate a request
     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://sunny.akafune.com"]];
     [webView loadRequest:request];
+
+    launchedFirst = true;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActive)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+}
+
+- (void)applicationDidBecomeActive
+{
+    if (launchedFirst) {
+        launchedFirst = false;
+    }
+    else {
+        [webView reload];
+    }
 }
 
 - (void)didReceiveMemoryWarning
