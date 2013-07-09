@@ -86,11 +86,7 @@
 // プッシュ通知を受信した際の処理
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
 #if !TARGET_IPHONE_SIMULATOR
-    NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
-    NSString *alert = [apsInfo objectForKey:@"alert"];
-    NSString *sound = [apsInfo objectForKey:@"sound"];
-    NSString *badge = [apsInfo objectForKey:@"badge"];
-    application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
+    application.applicationIconBadgeNumber = 0;
 #endif
 }
 @end
