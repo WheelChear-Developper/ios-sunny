@@ -24,6 +24,8 @@
 		0A338AC3177820170099E1E0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A338A9B177820160099E1E0 /* Foundation.framework */; };
 		0A338ACB177820170099E1E0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0A338AC9177820170099E1E0 /* InfoPlist.strings */; };
 		0A338ACE177820170099E1E0 /* sunnyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A338ACD177820170099E1E0 /* sunnyTests.m */; };
+		0A81157417C4BB8D00F212CD /* logo-icon-57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A81157317C4BB8D00F212CD /* logo-icon-57x57.png */; };
+		0A81157617C4BB9200F212CD /* logo-icon-114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A81157517C4BB9200F212CD /* logo-icon-114x114.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		0A338ACA177820170099E1E0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0A338ACC177820170099E1E0 /* sunnyTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sunnyTests.h; sourceTree = "<group>"; };
 		0A338ACD177820170099E1E0 /* sunnyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sunnyTests.m; sourceTree = "<group>"; };
+		0A81157317C4BB8D00F212CD /* logo-icon-57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-icon-57x57.png"; sourceTree = "<group>"; };
+		0A81157517C4BB9200F212CD /* logo-icon-114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-icon-114x114.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 		0A338A8D177820160099E1E0 = {
 			isa = PBXGroup;
 			children = (
+				0A81157517C4BB9200F212CD /* logo-icon-114x114.png */,
+				0A81157317C4BB8D00F212CD /* logo-icon-57x57.png */,
 				0A338A9F177820160099E1E0 /* sunny */,
 				0A338AC6177820170099E1E0 /* sunnyTests */,
 				0A338A98177820160099E1E0 /* Frameworks */,
@@ -240,6 +246,8 @@
 				0A338AB0177820160099E1E0 /* Default-568h@2x.png in Resources */,
 				0A338AB3177820160099E1E0 /* MainStoryboard_iPhone.storyboard in Resources */,
 				0A338AB6177820160099E1E0 /* MainStoryboard_iPad.storyboard in Resources */,
+				0A81157417C4BB8D00F212CD /* logo-icon-57x57.png in Resources */,
+				0A81157617C4BB9200F212CD /* logo-icon-114x114.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,10 +414,14 @@
 		0A338AD3177820170099E1E0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Takamasa SHIOE (28UP93TVV6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Takamasa SHIOE (28UP93TVV6)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sunny/sunny-Prefix.pch";
 				INFOPLIST_FILE = "sunny/sunny-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -467,6 +479,7 @@
 				0A338AD3177820170099E1E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0A338AD4177820170099E1E0 /* Build configuration list for PBXNativeTarget "sunnyTests" */ = {
 			isa = XCConfigurationList;
@@ -475,6 +488,7 @@
 				0A338AD6177820170099E1E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
