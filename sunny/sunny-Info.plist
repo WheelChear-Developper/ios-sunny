@@ -16,6 +16,8 @@
 			<array>
 				<string>logo-icon-57x57.png</string>
 				<string>logo-icon-114x114.png</string>
+				<string>logo-icon-72x72.png</string>
+				<string>logo-icon-144x144.png</string>
 			</array>
 		</dict>
 	</dict>
