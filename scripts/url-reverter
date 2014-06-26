@@ -1,7 +1,0 @@
-#! /bin/sh
-
-if [ -e sunny/ViewController.m.bk ]
-then
-  mv sunny/ViewController.m.bk sunny/ViewController.m
-  mv sunny/AppDelegate.m.bk sunny/AppDelegate.m
-fi
