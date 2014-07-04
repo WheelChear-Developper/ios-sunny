@@ -1,0 +1,24 @@
+
+/* Class = "IBUINavigationItem"; title = "Root View Controller"; ObjectID = "2MD-MV-dab"; */
+"2MD-MV-dab.title" = "Root View Controller";
+
+/* Class = "IBUITabBarItem"; title = "フェイスブック"; ObjectID = "8mK-WY-P43"; */
+"8mK-WY-P43.title" = "フェイスブック";
+
+/* Class = "IBUINavigationItem"; title = "Root View Controller"; ObjectID = "Eod-PF-vHJ"; */
+"Eod-PF-vHJ.title" = "Root View Controller";
+
+/* Class = "IBUITabBarItem"; title = "ビュー"; ObjectID = "KBA-p7-wiV"; */
+"KBA-p7-wiV.title" = "ビュー";
+
+/* Class = "IBUINavigationItem"; title = "Root View Controller"; ObjectID = "dtT-aM-zn6"; */
+"dtT-aM-zn6.title" = "Root View Controller";
+
+/* Class = "IBUINavigationItem"; title = "ニュース"; ObjectID = "g5w-kI-a3I"; */
+"g5w-kI-a3I.title" = "ニュース";
+
+/* Class = "IBUITabBarItem"; title = "ニュース"; ObjectID = "h4N-Kw-B4x"; */
+"h4N-Kw-B4x.title" = "ニュース";
+
+/* Class = "IBUITabBarItem"; title = "設定"; ObjectID = "twX-w4-VXE"; */
+"twX-w4-VXE.title" = "設定";
