@@ -13,6 +13,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //トピック初期化
+    [Configuration synchronize];
+    
     //データベース前処理
     [SqlManager InitialSql];
     
@@ -20,12 +23,12 @@
     application.applicationIconBadgeNumber = 0;
     
     // push通知呼び出し用
-//    [application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge|
-//                                                      UIRemoteNotificationTypeSound|
-//                                                      UIRemoteNotificationTypeAlert)];
+    [application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge|
+                                                      UIRemoteNotificationTypeSound|
+                                                      UIRemoteNotificationTypeAlert)];
     
-    //トピック初期化
-    [Configuration synchronize];
+    // Background Fetchの準備
+	[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     // iOS6/7でのレイアウト互換設定
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
@@ -119,11 +122,11 @@ didRegisterForRemoteNotificationsWithError:(NSError *)err
     NSLog(@"取得デバイストークンキー＿%@",deviceToken);
     
     // デバイストークン保存(サーバー用)
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"Service_DomainURL",@""), @"/apns_devices"]]];
-//    NSString *requestBody = [@"apns_device[token]=" stringByAppendingString:deviceToken];
-//    [request setHTTPMethod:@"POST"];
-//    [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
-//    [NSURLConnection connectionWithRequest:request delegate:self];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"Service_DomainURL",@""), @"/apns_devices"]]];
+    NSString *requestBody = [@"apns_device[token]=" stringByAppendingString:deviceToken];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
+    [NSURLConnection connectionWithRequest:request delegate:self];
 }
 
 // フォアグラウンドかスタンバイのプッシュ通知からの起動
@@ -132,6 +135,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     if (application.applicationState == UIApplicationStateActive){
         if([Configuration getPushNotifications]){
+            //ニュースプッシュ通知ON
+            [Configuration setPushNews:YES];
             // 通信エラーメッセージ表示
             UIAlertView *errAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Dialog_SiteReupMsg",@"")
                                                                message:nil
@@ -141,6 +146,12 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
             [errAlert show];
         }
     }
+}
+
+//バックグラウンド処理
+- (void)application:(UIApplication*)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+
 }
 
 @end

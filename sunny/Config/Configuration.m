@@ -167,17 +167,32 @@ static NSString *CONFIGURATION_NEWSID = @"Configuration.NewsID";
 }
 
 #pragma mark - NewsTitle
-static NSString *CONFIGURATION_PUSH_NEWSTITLE = @"Configuration.NewsTitle";
+static NSString *CONFIGURATION_NEWSTITLE = @"Configuration.NewsTitle";
 + (NSString*)getNewsTitle
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults registerDefaults:@{CONFIGURATION_PUSH_NEWSTITLE : @("")}];
-    return [userDefaults stringForKey:CONFIGURATION_PUSH_NEWSTITLE];
+    [userDefaults registerDefaults:@{CONFIGURATION_NEWSTITLE : @("")}];
+    return [userDefaults stringForKey:CONFIGURATION_NEWSTITLE];
 }
 + (void)setNewsTitle:(NSString*)value
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:value forKey:CONFIGURATION_PUSH_NEWSTITLE];
+    [userDefaults setObject:value forKey:CONFIGURATION_NEWSTITLE];
+    [userDefaults synchronize];
+}
+
+#pragma mark - PushNews
+static NSString *CONFIGURATION_PUSHNEWS= @"Configuration.PushNews";
++ (BOOL)getPushNews
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults registerDefaults:@{CONFIGURATION_PUSHNEWS : @(NO)}];
+    return [userDefaults boolForKey:CONFIGURATION_PUSHNEWS];
+}
++ (void)setPushNews:(BOOL)value
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:value forKey:CONFIGURATION_PUSHNEWS];
     [userDefaults synchronize];
 }
 

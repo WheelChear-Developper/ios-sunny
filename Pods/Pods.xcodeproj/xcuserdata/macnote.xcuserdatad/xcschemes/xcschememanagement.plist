@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-CZDateFormatterCache.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-FMDB.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>212382C76E6A443A89D704EF</key>
+		<key>0E8974F1A9A64D9792D73AD0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8A00BA67D1834737BB0C3868</key>
+		<key>30D82DC02E874A61AA983E65</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A7BC6DC0C1A548598298A365</key>
+		<key>6BB949BA73CA42289A8C2D9F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B19B25366CA84D9BA5E7C6A0</key>
+		<key>874D13E341764C2A9C208531</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E473131042B44DF8A2AA23B0</key>
+		<key>AD59EE81BA1D48A79097BD70</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BA7B17EDDC6C430AB58AD961</key>
 		<dict>
 			<key>primary</key>
 			<true/>

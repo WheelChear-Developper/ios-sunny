@@ -48,6 +48,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 3
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// CZDateFormatterCache
+#define COCOAPODS_POD_AVAILABLE_CZDateFormatterCache
+#define COCOAPODS_VERSION_MAJOR_CZDateFormatterCache 1
+#define COCOAPODS_VERSION_MINOR_CZDateFormatterCache 2
+#define COCOAPODS_VERSION_PATCH_CZDateFormatterCache 0
+
 // FMDB
 #define COCOAPODS_POD_AVAILABLE_FMDB
 #define COCOAPODS_VERSION_MAJOR_FMDB 2

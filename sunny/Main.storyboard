@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="nKX-AD-l3U">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="nKX-AD-l3U">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -95,6 +95,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="n4o-Hn-deP">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="56d-Bx-dac">
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="Csy-XC-Dii" kind="relationship" relationship="rootViewController" id="SWg-1y-4cL"/>
                     </connections>
@@ -108,7 +112,8 @@
             <objects>
                 <navigationController definesPresentationContext="YES" id="Nbc-vd-L98" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="1" title="メニュー" id="A1K-Iu-LL6"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="rJg-VG-o0b">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="rJg-VG-o0b">
+                        <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -2464,11 +2469,11 @@
             <objects>
                 <viewController id="z68-1t-0Mk" customClass="Menu_ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Oko-QS-TRC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" id="bke-ui-Tyq">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>

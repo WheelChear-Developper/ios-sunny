@@ -57,4 +57,8 @@
 + (NSString*)getNewsTitle;
 + (void)setNewsTitle:(NSString*)value;
 
+#pragma mark - PushNews
++ (BOOL)getPushNews;
++ (void)setPushNews:(BOOL)value;
+
 @end

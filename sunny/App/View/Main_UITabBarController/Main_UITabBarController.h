@@ -7,10 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "News_ViewController.h"
+#import "Beacon_LogListDataModel.h"
+#import "SqlManager.h"
 
 @interface Main_UITabBarController : UITabBarController
 {
+    UITabBarController *_rootController;
 //    UIAlertView *errAlert_exit;
 }
+#pragma mark - property
+@property (strong, nonatomic) UIWindow *window;
+
 @property (nonatomic,retain)NSMutableData *mData;
 @end

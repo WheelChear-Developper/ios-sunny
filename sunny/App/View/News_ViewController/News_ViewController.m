@@ -81,9 +81,15 @@
 {
     [super viewWillAppear:animated];
     
-    // リストデータの読み込み
-    [SVProgressHUD showWithStatus:NSLocalizedString(@"Progress_Reading",@"")];
-    [self readWebData];
+    if(_News_TotalDataBox.count == 0){
+        // リストデータの読み込み
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"Progress_Reading",@"")];
+        [self readWebData];
+    }else if([Configuration getPushNews] == YES){
+        // リストデータの読み込み
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"Progress_Reading",@"")];
+        [self readWebData];
+    }
 }
 
 // 画面の表示の時に起動するメソッド

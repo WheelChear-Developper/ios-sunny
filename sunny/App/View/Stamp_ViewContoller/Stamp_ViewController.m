@@ -78,11 +78,13 @@
 // 起動・再開の時に起動するメソッド
 - (void)viewWillAppear:(BOOL)animated
 {
-    // リストデータの読み込み
-    [SVProgressHUD showWithStatus:NSLocalizedString(@"Progress_Reading",@"")];
-    [self readWebData];
-    
     [super viewWillAppear:animated];
+    
+    if(_Stamp_TotalDataBox.count == 0){
+        // リストデータの読み込み
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"Progress_Reading",@"")];
+        [self readWebData];
+    }
 }
 
 // 画面の表示の時に起動するメソッド
