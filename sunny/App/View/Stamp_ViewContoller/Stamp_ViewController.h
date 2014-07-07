@@ -8,10 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "Stamp_ListDataModel.h"
+#import "SqlManager.h"
 
 @interface Stamp_ViewController : UIViewController <NSURLConnectionDataDelegate, UIScrollViewDelegate, UITextViewDelegate>
 {
     // テーブルビュー
-    IBOutlet UITableView *Table_View;    
+    IBOutlet UITableView *Table_View;
+    
+    __weak IBOutlet UIImageView *img_stamp1;
+    __weak IBOutlet UIImageView *img_stamp2;
+    __weak IBOutlet UIImageView *img_stamp3;
+    __weak IBOutlet UIImageView *img_stamp4;
+    __weak IBOutlet UIImageView *img_stamp5;
+    __weak IBOutlet UIImageView *img_stamp6;
+    __weak IBOutlet UIImageView *img_stamp7;
+    __weak IBOutlet UIImageView *img_stamp8;
+    __weak IBOutlet UIImageView *img_stamp9;
+    
 }
 @end

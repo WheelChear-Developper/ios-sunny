@@ -19,9 +19,6 @@
     //データベース前処理
     [SqlManager InitialSql];
     
-    // 通知のリセット
-    application.applicationIconBadgeNumber = 0;
-    
     // push通知呼び出し用
     [application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge|
                                                       UIRemoteNotificationTypeSound|
@@ -60,17 +57,18 @@
     return YES;
 }
 
+// 終了処理
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
 }
 
 // 終了処理
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // 通知のリセット
-    application.applicationIconBadgeNumber = 0;
+    // 通知のセット
+    [Configuration setPushNews:0];
+    application.applicationIconBadgeNumber = [Configuration getPushNews] + [Configuration getPushBeacon];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -80,6 +78,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    // 通知のリセット
     application.applicationIconBadgeNumber = 0;
 }
 
@@ -136,7 +135,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     if (application.applicationState == UIApplicationStateActive){
         if([Configuration getPushNotifications]){
             //ニュースプッシュ通知ON
-            [Configuration setPushNews:YES];
+            [Configuration setPushNews:1];
             // 通信エラーメッセージ表示
             UIAlertView *errAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Dialog_SiteReupMsg",@"")
                                                                message:nil
@@ -151,7 +150,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 //バックグラウンド処理
 - (void)application:(UIApplication*)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-
+    //サーバー情報同期処理
+    [SqlManager set_BeconLogList_serverReUp];
 }
 
 @end

@@ -74,8 +74,9 @@
     NSString* tbl2_sql5 = @" log_major       TEXT,";
     NSString* tbl2_sql6 = @" log_minor       TEXT,";
     NSString* tbl2_sql7 = @" log_proximity   INTEGER,";
-    NSString* tbl2_sql8 = @" log_accuracy    REAL);";
-    NSString* tbl2_MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@", tbl2_sql1, tbl2_sql2, tbl2_sql3, tbl2_sql4, tbl2_sql5, tbl2_sql6, tbl2_sql7, tbl2_sql8];
+    NSString* tbl2_sql8 = @" log_accuracy    REAL,";
+    NSString* tbl2_sql9 = @" log_state       INTEGER);";
+    NSString* tbl2_MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@", tbl2_sql1, tbl2_sql2, tbl2_sql3, tbl2_sql4, tbl2_sql5, tbl2_sql6, tbl2_sql7, tbl2_sql8, tbl2_sql9];
     if (![DbAccess executeUpdate:tbl2_MakeSQL]) {
         NSLog(@"ERROR: %d: %@", [DbAccess lastErrorCode], [DbAccess lastErrorMessage]);
     }
@@ -171,235 +172,6 @@
 }
 
 
-// ビーコンデータ取得処理（全データ取得）
-+ (NSMutableArray*)Get_BeconLogList_AllData
-{
-    //データベース接続
-    FMDatabase* DbAccess = [self _getDB:DBFILE];
-    
-    //管理データ取得
-    NSString* Sql1 = @"SELECT";
-    NSString* Sql2 = @" log_record_id,";
-    NSString* Sql3 = @" log_date,";
-    NSString* Sql4 = @" log_uuid,";
-    NSString* Sql5 = @" log_major,";
-    NSString* Sql6 = @" log_minor,";
-    NSString* Sql7 = @" log_proximity,";
-    NSString* Sql8 = @" log_accuracy";
-    NSString* Sql9 = @" FROM tbl_becon_log";
-    NSString* Sql10 = @" ORDER BY log_data;";
-    NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@",Sql1,Sql2,Sql3,Sql4,Sql5,Sql6,Sql7,Sql8,Sql9,Sql10];
-    FMResultSet* results = [DbAccess executeQuery:MakeSQL];
-    if (!results) {
-        NSLog(@"ERROR: %d: %@", [DbAccess lastErrorCode], [DbAccess lastErrorMessage]);
-    }
-    
-    //データ格納
-    NSMutableArray *dbBox = [NSMutableArray array];
-    while( [results next] )
-    {
-        Beacon_LogListDataModel *beaconLogDataModel = [[Beacon_LogListDataModel alloc] init];
-        beaconLogDataModel.log_record_id = [results longForColumn:@"log_record_id"];
-        beaconLogDataModel.log_date = [results dateForColumn:@"log_date"];
-        beaconLogDataModel.log_UUID = [results stringForColumn:@"log_uuid"];
-        beaconLogDataModel.log_major = [results stringForColumn:@"log_major"];
-        beaconLogDataModel.log_minor = [results stringForColumn:@"log_minor"];
-        beaconLogDataModel.log_proximity = [results longForColumn:@"log_proximity"];
-        beaconLogDataModel.log_accuracy = [results doubleForColumn:@"log_accuracy"];
-        [dbBox addObject:beaconLogDataModel];
-    }
-    
-    //データベースクローズ
-    [DbAccess close];
-    
-    return dbBox;
-}
-
-// ビーコンデータ取得処理（指定日一日分のデータ取得）
-+ (NSMutableArray*)Get_BeconLogList_OnedaySerch:(NSDate*)dt
-{
-    //データベース接続
-    FMDatabase* DbAccess = [self _getDB:DBFILE];
-    
-    //１日分のデータ範囲とする
-    NSDateComponents *comps;
-    NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    comps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:dt];
-    [comps setHour:00];
-    [comps setMinute:00];
-    [comps setSecond:00];
-    NSDate *dt_start = [calendar dateFromComponents:comps];
-    
-    comps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:dt];
-    [comps setHour:23];
-    [comps setMinute:59];
-    [comps setSecond:59];
-    NSDate *dt_end = [calendar dateFromComponents:comps];
-    
-    //管理データ取得
-    NSString* Sql1 = @"SELECT";
-    NSString* Sql2 = @" log_record_id,";
-    NSString* Sql3 = @" log_date,";
-    NSString* Sql4 = @" log_uuid,";
-    NSString* Sql5 = @" log_major,";
-    NSString* Sql6 = @" log_minor,";
-    NSString* Sql7 = @" log_proximity,";
-    NSString* Sql8 = @" log_accuracy";
-    NSString* Sql9 = @" FROM tbl_becon_log";
-    NSString* Sql10 = @" WHERE";
-    NSString* Sql11 = [NSString stringWithFormat:@" '%@' >= log_data AND log_data <= '%@';", dt_start, dt_end];
-    NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",Sql1,Sql2,Sql3,Sql4,Sql5,Sql6,Sql7,Sql8,Sql9,Sql10,Sql11];
-    FMResultSet* results = [DbAccess executeQuery:MakeSQL];
-    if (!results) {
-        NSLog(@"ERROR: %d: %@", [DbAccess lastErrorCode], [DbAccess lastErrorMessage]);
-    }
-    
-    //データ格納
-    NSMutableArray *dbBox = [NSMutableArray array];
-    while( [results next] )
-    {
-        Beacon_LogListDataModel *beaconLogDataModel = [[Beacon_LogListDataModel alloc] init];
-        beaconLogDataModel.log_record_id = [results longForColumn:@"log_record_id"];
-        beaconLogDataModel.log_date = [results dateForColumn:@"log_date"];
-        beaconLogDataModel.log_UUID = [results stringForColumn:@"log_uuid"];
-        beaconLogDataModel.log_major = [results stringForColumn:@"log_major"];
-        beaconLogDataModel.log_minor = [results stringForColumn:@"log_minor"];
-        beaconLogDataModel.log_proximity = [results longForColumn:@"log_proximity"];
-        beaconLogDataModel.log_accuracy = [results doubleForColumn:@"log_accuracy"];
-        [dbBox addObject:beaconLogDataModel];
-    }
-    
-    //データベースクローズ
-    [DbAccess close];
-    
-    return dbBox;
-}
-
-// ビーコンデータ取得処理（指定日一日分かつ、端末番号指定のデータ取得）
-+ (NSMutableArray*)Get_BeconLogList_Oneday_MajorMinarSerch:(NSDate*)dt Major:(NSString*)major Minor:(NSString*)minor
-{
-    //データベース接続
-    FMDatabase* DbAccess = [self _getDB:DBFILE];
-    
-    //１日分のデータ範囲とする
-    NSDateComponents *comps;
-    NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    comps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:dt];
-    [comps setHour:00];
-    [comps setMinute:00];
-    [comps setSecond:00];
-    NSDate *dt_start = [calendar dateFromComponents:comps];
-    
-    comps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:dt];
-    [comps setHour:23];
-    [comps setMinute:59];
-    [comps setSecond:59];
-    NSDate *dt_end = [calendar dateFromComponents:comps];
-    
-    //管理データ取得
-    NSString* Sql1 = @"SELECT";
-    NSString* Sql2 = @" log_record_id,";
-    NSString* Sql3 = @" log_date,";
-    NSString* Sql4 = @" log_uuid,";
-    NSString* Sql5 = @" log_major,";
-    NSString* Sql6 = @" log_minor,";
-    NSString* Sql7 = @" log_proximity,";
-    NSString* Sql8 = @" log_accuracy";
-    NSString* Sql9 = @" FROM tbl_becon_log;";
-    NSString* Sql10 = @" WHERE";
-    NSString* Sql11 = [NSString stringWithFormat:@" '%@' >= log_date AND log_date <= '%@'", dt_start, dt_end];
-    NSString* Sql12 = [NSString stringWithFormat:@" AND log_major = '%@'", major];
-    NSString* Sql13 = [NSString stringWithFormat:@" AND log_minor = '%@';", minor];
-    NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@%@", Sql1, Sql2, Sql3, Sql4, Sql5, Sql6, Sql7, Sql8, Sql9, Sql10, Sql11, Sql12, Sql13];
-    FMResultSet* results = [DbAccess executeQuery:MakeSQL,dt_start,dt_end, major, minor];
-    if (!results) {
-        NSLog(@"ERROR: %d: %@", [DbAccess lastErrorCode], [DbAccess lastErrorMessage]);
-    }
-    
-    //データ格納
-    NSMutableArray *dbBox = [NSMutableArray array];
-    while( [results next] )
-    {
-        Beacon_LogListDataModel *beaconLogDataModel = [[Beacon_LogListDataModel alloc] init];
-        beaconLogDataModel.log_record_id = [results longForColumn:@"log_record_id"];
-        beaconLogDataModel.log_date = [results dateForColumn:@"log_date"];
-        beaconLogDataModel.log_UUID = [results stringForColumn:@"log_uuid"];
-        beaconLogDataModel.log_major = [results stringForColumn:@"log_major"];
-        beaconLogDataModel.log_minor = [results stringForColumn:@"log_minor"];
-        beaconLogDataModel.log_proximity = [results longForColumn:@"log_proximity"];
-        beaconLogDataModel.log_accuracy = [results doubleForColumn:@"log_accuracy"];
-        [dbBox addObject:beaconLogDataModel];
-    }
-    
-    //データベースクローズ
-    [DbAccess close];
-    
-    return dbBox;
-}
-
-// ビーコンデータ取得処理（指定日一日分かつ、端末番号、距離指定のデータ取得）
-+ (NSMutableArray*)Get_BeconLogList_Oneday_MajorMinarProximitySerch:(NSDate*)dt Major:(NSString*)major Minor:(NSString*)minor Proximity:(long)proximity
-{
-    //データベース接続
-    FMDatabase* DbAccess = [self _getDB:DBFILE];
-    
-    //１日分のデータ範囲とする
-    NSDateComponents *comps;
-    NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    comps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:dt];
-    [comps setHour:00];
-    [comps setMinute:00];
-    [comps setSecond:00];
-    NSDate *dt_start = [calendar dateFromComponents:comps];
-    
-    comps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:dt];
-    [comps setHour:23];
-    [comps setMinute:59];
-    [comps setSecond:59];
-    NSDate *dt_end = [calendar dateFromComponents:comps];
-    
-    //管理データ取得
-    NSString* Sql1 = @"SELECT";
-    NSString* Sql2 = @" log_record_id,";
-    NSString* Sql3 = @" log_date,";
-    NSString* Sql4 = @" log_uuid,";
-    NSString* Sql5 = @" log_major,";
-    NSString* Sql6 = @" log_minor,";
-    NSString* Sql7 = @" log_proximity,";
-    NSString* Sql8 = @" log_accuracy";
-    NSString* Sql9 = @" FROM tbl_becon_log";
-    NSString* Sql10 = @" WHERE";
-    NSString* Sql11 = [NSString stringWithFormat:@" '%@' >= log_date AND log_date <= '%@'", dt_start, dt_end];
-    NSString* Sql12 = [NSString stringWithFormat:@" AND log_major = '%@'", major];
-    NSString* Sql13 = [NSString stringWithFormat:@" AND log_minor = '%@'", minor];
-    NSString* Sql14 = [NSString stringWithFormat:@" AND log_proximity = %ld;", proximity];
-    NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@%@%@", Sql1, Sql2, Sql3, Sql4, Sql5, Sql6, Sql7, Sql8, Sql9, Sql10, Sql11, Sql12, Sql13, Sql14];
-    FMResultSet* results = [DbAccess executeQuery:MakeSQL];
-    if (!results) {
-        NSLog(@"ERROR: %d: %@", [DbAccess lastErrorCode], [DbAccess lastErrorMessage]);
-    }
-    
-    //データ格納
-    NSMutableArray *dbBox = [NSMutableArray array];
-    while( [results next] )
-    {
-        Beacon_LogListDataModel *beaconLogDataModel = [[Beacon_LogListDataModel alloc] init];
-        beaconLogDataModel.log_record_id = [results longForColumn:@"log_record_id"];
-        beaconLogDataModel.log_date = [results dateForColumn:@"log_date"];
-        beaconLogDataModel.log_UUID = [results stringForColumn:@"log_uuid"];
-        beaconLogDataModel.log_major = [results stringForColumn:@"log_major"];
-        beaconLogDataModel.log_minor = [results stringForColumn:@"log_minor"];
-        beaconLogDataModel.log_proximity = [results longForColumn:@"log_proximity"];
-        beaconLogDataModel.log_accuracy = [results doubleForColumn:@"log_accuracy"];
-        [dbBox addObject:beaconLogDataModel];
-    }
-    
-    //データベースクローズ
-    [DbAccess close];
-    
-    return dbBox;
-}
-
 // ビーコンデータ保存処理
 + (BOOL)Set_BeconLogList:(Beacon_LogListDataModel*)bicon_logDataListset
 {
@@ -450,13 +222,14 @@
     if(bln_chkday == NO){
         //データ保存
         NSString* sql1 = @"INSERT INTO tbl_becon_log";
-        NSString* sql2 = @" (log_date, log_uuid, log_major, log_minor, log_proximity, log_accuracy) VALUES ";
-        NSString* sql3 = [NSString stringWithFormat:@"( ?, '%@', '%@', '%@', %ld, %f);",
+        NSString* sql2 = @" (log_date, log_uuid, log_major, log_minor, log_proximity, log_accuracy, log_state) VALUES ";
+        NSString* sql3 = [NSString stringWithFormat:@"( ?, '%@', '%@', '%@', %ld, %f, %ld);",
                           bicon_logDataListset.log_UUID,
                           bicon_logDataListset.log_major,
                           bicon_logDataListset.log_minor,
                           bicon_logDataListset.log_proximity,
-                          bicon_logDataListset.log_accuracy];
+                          bicon_logDataListset.log_accuracy,
+                          bicon_logDataListset.log_state];
         NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@",sql1, sql2, sql3];
         if (![DbAccess executeUpdate:MakeSQL, bicon_logDataListset.log_date]) {
             NSLog(@"ERROR: %d: %@", [DbAccess lastErrorCode], [DbAccess lastErrorMessage]);
@@ -471,20 +244,176 @@
     [DbAccess close];
 }
 
-// ビーコンデータ指定ログID削除処理
-+ (void)set_BeconLogList_delete:(long)record_id
+//ビーコンデータ サーバーデータ同期処理
++ (void)set_BeconLogList_serverReUp
 {
     //データベース接続
     FMDatabase* DbAccess = [self _getDB:DBFILE];
     
-    //データ保存前データ削除
-    NSString* MakeSQL = [NSString stringWithFormat:@"DELETE FROM tbl_log WHERE log_record_id = ?"];
-    if (![DbAccess executeUpdate:MakeSQL,record_id]) {
+    //サーバーとの同期処理
+    //管理データ取得
+    NSString* Sql1 = @"SELECT";
+    NSString* Sql2 = @" log_record_id,";
+    NSString* Sql3 = @" log_date,";
+    NSString* Sql4 = @" log_uuid,";
+    NSString* Sql5 = @" log_major,";
+    NSString* Sql6 = @" log_minor,";
+    NSString* Sql7 = @" log_proximity,";
+    NSString* Sql8 = @" log_accuracy,";
+    NSString* Sql9 = @" log_state";
+    NSString* Sql10 = @" FROM tbl_becon_log";
+    NSString* Sql11 = @" WHERE";
+    NSString* Sql12 = @" log_state = 0";
+    NSString* Sql13 = @" ORDER BY log_date;";
+    NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@%@",Sql1,Sql2,Sql3,Sql4,Sql5,Sql6,Sql7,Sql8,Sql9,Sql10,Sql11,Sql12,Sql13];
+    FMResultSet* results = [DbAccess executeQuery:MakeSQL];
+    if (!results) {
         NSLog(@"ERROR: %d: %@", [DbAccess lastErrorCode], [DbAccess lastErrorMessage]);
+    }
+    
+    //データ格納
+    NSMutableArray *dbBox = [NSMutableArray array];
+    while( [results next] )
+    {
+        Beacon_LogListDataModel *beaconLogDataModel = [[Beacon_LogListDataModel alloc] init];
+        beaconLogDataModel.log_record_id = [results longForColumn:@"log_record_id"];
+        beaconLogDataModel.log_date = [results dateForColumn:@"log_date"];
+        beaconLogDataModel.log_UUID = [results stringForColumn:@"log_uuid"];
+        beaconLogDataModel.log_major = [results stringForColumn:@"log_major"];
+        beaconLogDataModel.log_minor = [results stringForColumn:@"log_minor"];
+        beaconLogDataModel.log_proximity = [results longForColumn:@"log_proximity"];
+        beaconLogDataModel.log_accuracy = [results doubleForColumn:@"log_accuracy"];
+        beaconLogDataModel.log_state = [results longForColumn:@"log_state"];
+        [dbBox addObject:beaconLogDataModel];
+    }
+    
+    if(dbBox.count > 0){
+        NSLog(@"サーバーと更新処理を実行");
+        
+        
+        
+        
+        
+        
+        
     }
     
     //データベースクローズ
     [DbAccess close];
 }
+
+
+
+
+// ビーコンデータ取得処理（有効データ取得）
++ (NSMutableArray*)Get_BeconLogList_EffectiveData
+{
+    //データベース接続
+    FMDatabase* DbAccess = [self _getDB:DBFILE];
+    
+    //管理データ取得
+    NSString* Sql1 = @"SELECT";
+    NSString* Sql2 = @" log_record_id,";
+    NSString* Sql3 = @" log_date,";
+    NSString* Sql4 = @" log_uuid,";
+    NSString* Sql5 = @" log_major,";
+    NSString* Sql6 = @" log_minor,";
+    NSString* Sql7 = @" log_proximity,";
+    NSString* Sql8 = @" log_accuracy,";
+    NSString* Sql9 = @" log_state";
+    NSString* Sql10 = @" FROM tbl_becon_log";
+    NSString* Sql11 = @" WHERE";
+    NSString* Sql12 = @" log_state = 0";
+    NSString* Sql13 = @" ORDER BY log_date;";
+    NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@%@",Sql1,Sql2,Sql3,Sql4,Sql5,Sql6,Sql7,Sql8,Sql9,Sql10,Sql11,Sql12,Sql13];
+    FMResultSet* results = [DbAccess executeQuery:MakeSQL];
+    if (!results) {
+        NSLog(@"ERROR: %d: %@", [DbAccess lastErrorCode], [DbAccess lastErrorMessage]);
+    }
+    
+    //データ格納
+    NSMutableArray *dbBox = [NSMutableArray array];
+    while( [results next] )
+    {
+        Beacon_LogListDataModel *beaconLogDataModel = [[Beacon_LogListDataModel alloc] init];
+        beaconLogDataModel.log_record_id = [results longForColumn:@"log_record_id"];
+        beaconLogDataModel.log_date = [results dateForColumn:@"log_date"];
+        beaconLogDataModel.log_UUID = [results stringForColumn:@"log_uuid"];
+        beaconLogDataModel.log_major = [results stringForColumn:@"log_major"];
+        beaconLogDataModel.log_minor = [results stringForColumn:@"log_minor"];
+        beaconLogDataModel.log_proximity = [results longForColumn:@"log_proximity"];
+        beaconLogDataModel.log_accuracy = [results doubleForColumn:@"log_accuracy"];
+        beaconLogDataModel.log_state = [results longForColumn:@"log_state"];
+        [dbBox addObject:beaconLogDataModel];
+    }
+    
+    //データベースクローズ
+    [DbAccess close];
+    
+    return dbBox;
+}
+
+// ビーコンデータ取得処理（指定日一日分のデータ取得）
++ (NSMutableArray*)Get_BeconLogList_OnedaySerch:(NSDate*)dt
+{
+    //データベース接続
+    FMDatabase* DbAccess = [self _getDB:DBFILE];
+    
+    //１日分のデータ範囲とする
+    NSDateComponents *comps;
+    NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    comps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:dt];
+    [comps setHour:00];
+    [comps setMinute:00];
+    [comps setSecond:00];
+    NSDate *dt_start = [calendar dateFromComponents:comps];
+    
+    comps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:dt];
+    [comps setHour:23];
+    [comps setMinute:59];
+    [comps setSecond:59];
+    NSDate *dt_end = [calendar dateFromComponents:comps];
+    
+    //管理データ取得
+    NSString* Sql1 = @"SELECT";
+    NSString* Sql2 = @" log_record_id,";
+    NSString* Sql3 = @" log_date,";
+    NSString* Sql4 = @" log_uuid,";
+    NSString* Sql5 = @" log_major,";
+    NSString* Sql6 = @" log_minor,";
+    NSString* Sql7 = @" log_proximity,";
+    NSString* Sql8 = @" log_accuracy,";
+    NSString* Sql9 = @" log_state";
+    NSString* Sql10 = @" FROM tbl_becon_log";
+    NSString* Sql11 = @" WHERE";
+    NSString* Sql12 = [NSString stringWithFormat:@" '%@' >= log_date AND log_date <= '%@';", dt_start, dt_end];
+    NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@",Sql1,Sql2,Sql3,Sql4,Sql5,Sql6,Sql7,Sql8,Sql9,Sql10,Sql11,Sql12];
+    FMResultSet* results = [DbAccess executeQuery:MakeSQL];
+    if (!results) {
+        NSLog(@"ERROR: %d: %@", [DbAccess lastErrorCode], [DbAccess lastErrorMessage]);
+    }
+    
+    //データ格納
+    NSMutableArray *dbBox = [NSMutableArray array];
+    while( [results next] )
+    {
+        Beacon_LogListDataModel *beaconLogDataModel = [[Beacon_LogListDataModel alloc] init];
+        beaconLogDataModel.log_record_id = [results longForColumn:@"log_record_id"];
+        beaconLogDataModel.log_date = [results dateForColumn:@"log_date"];
+        beaconLogDataModel.log_UUID = [results stringForColumn:@"log_uuid"];
+        beaconLogDataModel.log_major = [results stringForColumn:@"log_major"];
+        beaconLogDataModel.log_minor = [results stringForColumn:@"log_minor"];
+        beaconLogDataModel.log_proximity = [results longForColumn:@"log_proximity"];
+        beaconLogDataModel.log_accuracy = [results doubleForColumn:@"log_accuracy"];
+        beaconLogDataModel.log_state = [results longForColumn:@"log_state"];
+        [dbBox addObject:beaconLogDataModel];
+    }
+    
+    //データベースクローズ
+    [DbAccess close];
+    
+    return dbBox;
+}
+
 
 @end

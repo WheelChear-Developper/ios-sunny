@@ -77,9 +77,9 @@ CLBeacon *nearestBeacon;
     
     //TabBarに表示されるテキストのフォントとサイズを指定
     //タブバーの文字色と文字サイズを設定(選択前)
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.831 green:0.533 blue:0.008 alpha:1.000], NSForegroundColorAttributeName,[UIFont systemFontOfSize:9.000], NSForegroundColorAttributeName,nil] forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.831 green:0.533 blue:0.008 alpha:1.000], NSForegroundColorAttributeName,[UIFont systemFontOfSize:8.500], NSForegroundColorAttributeName,nil] forState:UIControlStateNormal];
     //タブバーの文字色と文字サイズを設定(選択中)
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:1.000 green:1.000 blue:1.000 alpha:1.000], NSForegroundColorAttributeName,[UIFont systemFontOfSize:9.000], NSForegroundColorAttributeName,nil] forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:1.000 green:1.000 blue:1.000 alpha:1.000], NSForegroundColorAttributeName,[UIFont systemFontOfSize:8.500], NSForegroundColorAttributeName,nil] forState:UIControlStateSelected];
     
     
     //通知の初期化
@@ -248,7 +248,7 @@ CLBeacon *nearestBeacon;
     if (beacons.count > 0) {
         nearestBeacon = beacons.firstObject;
         
-        NSLog(@"Beacon 受信距離 : %d",nearestBeacon.proximity);
+        NSLog(@"Beacon 受信距離 : %ld",(long)nearestBeacon.proximity);
         
         //同じ電波の受信を遮断
         if(str_SerchBeaconMejer == (NSString*)nearestBeacon.major && str_SerchBeaconMiner == (NSString*)nearestBeacon.minor){
@@ -262,18 +262,25 @@ CLBeacon *nearestBeacon;
             beaconLogDataModel.log_minor = (NSString*)nearestBeacon.minor;
             beaconLogDataModel.log_proximity = (long)nearestBeacon.proximity;
             beaconLogDataModel.log_accuracy = (double)nearestBeacon.accuracy;
+            beaconLogDataModel.log_state = 0;
             
             if([SqlManager Set_BeconLogList:beaconLogDataModel] == YES){
                 //ローカル通知
                 [self sendLocalNotificationForMessage];
                 
+                //Beacon用通知件数セット
+                [Configuration setPushBeacon:[Configuration getPushBeacon]+1];
+                
                 // オフラインで表示
-                UIAlertView *errAlert = [[UIAlertView alloc] initWithTitle:@"通知情報を受信"
-                                                                   message:@"ポイントを追加しました。"
+                UIAlertView *errAlert = [[UIAlertView alloc] initWithTitle:@"スタンプの来店情報を受信"
+                                                                   message:@"スタンプを追加しました。"
                                                                   delegate:self
                                                          cancelButtonTitle:NSLocalizedString(@"Dialog_KakuninMsg",@"")
                                                          otherButtonTitles:nil];
                 [errAlert show];
+                
+                //サーバー情報同期処理
+                [SqlManager set_BeconLogList_serverReUp];
             }
             
             //Beacon受信パターンの状態セット
@@ -308,27 +315,24 @@ CLBeacon *nearestBeacon;
 //装置状態確認
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
 {
-    NSString *message;
-    
     switch (peripheral.state) {
         case CBPeripheralManagerStatePoweredOff:
-            message = @"■電源切断\n\n";
+            NSLog(@"電源切断");
             break;
         case CBPeripheralManagerStatePoweredOn:
-            message = @"";
-            
+            NSLog(@"");
             break;
         case CBPeripheralManagerStateResetting:
-            message = @"■リセット\n\n";
+            NSLog(@"リセット");
             break;
         case CBPeripheralManagerStateUnauthorized:
-            message = @"■Unauthorized\n\n";
+            NSLog(@"Unauthorized");
             break;
         case CBPeripheralManagerStateUnknown:
-            message = @"■Unknown\n\n";
+            NSLog(@"Unknown");
             break;
         case CBPeripheralManagerStateUnsupported:
-            message = @"■Unsupported\n\n";
+            NSLog(@"Unsupported");
             break;
             
         default:

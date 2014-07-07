@@ -183,16 +183,31 @@ static NSString *CONFIGURATION_NEWSTITLE = @"Configuration.NewsTitle";
 
 #pragma mark - PushNews
 static NSString *CONFIGURATION_PUSHNEWS= @"Configuration.PushNews";
-+ (BOOL)getPushNews
++ (long)getPushNews;
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults registerDefaults:@{CONFIGURATION_PUSHNEWS : @(NO)}];
-    return [userDefaults boolForKey:CONFIGURATION_PUSHNEWS];
+    [userDefaults registerDefaults:@{CONFIGURATION_PUSHNEWS : @(0)}];
+    return [userDefaults integerForKey:CONFIGURATION_PUSHNEWS];
 }
-+ (void)setPushNews:(BOOL)value
++ (void)setPushNews:(long)value
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:value forKey:CONFIGURATION_PUSHNEWS];
+    [userDefaults setInteger:value forKey:CONFIGURATION_PUSHNEWS];
+    [userDefaults synchronize];
+}
+
+#pragma mark - PushBeacon
+static NSString *CONFIGURATION_PUSHBEACON = @"Configuration.PushBeacon";
++ (long)getPushBeacon;
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults registerDefaults:@{CONFIGURATION_PUSHBEACON : @(0)}];
+    return [userDefaults integerForKey:CONFIGURATION_PUSHBEACON];
+}
++ (void)setPushBeacon:(long)value
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setInteger:value forKey:CONFIGURATION_PUSHBEACON];
     [userDefaults synchronize];
 }
 

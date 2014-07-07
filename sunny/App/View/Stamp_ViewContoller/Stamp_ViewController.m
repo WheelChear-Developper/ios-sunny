@@ -59,6 +59,24 @@
     
     // Register CustomCell
     [Table_View registerNib:nib forCellReuseIdentifier:@"Stamp_Cell"];
+    
+    //スタンプのセット
+    [self set_StampMap];
+    
+    //定期確認タイマー
+    [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                     target:self
+                                   selector:@selector(doTimer:)
+                                   userInfo:nil
+                                    repeats:YES];
+}
+
+- (void)doTimer:(NSTimer *)timer
+{
+    if([Configuration getPushBeacon] > 0){
+        //スタンプのセット
+        [self set_StampMap];
+    }
 }
 
 // 終了処理
@@ -79,12 +97,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    if(_Stamp_TotalDataBox.count == 0){
-        // リストデータの読み込み
-        [SVProgressHUD showWithStatus:NSLocalizedString(@"Progress_Reading",@"")];
-        [self readWebData];
-    }
 }
 
 // 画面の表示の時に起動するメソッド
@@ -198,7 +210,135 @@
 }
 /////////////// ↑　テーブル用メソッド　↑ ////////////////////
 
-/////////////// ↓　通信用メソッド　↓　////////////////////
+/////////////// ↓　スタンプ情報更新用メソッド　↓ ////////////////////
+- (void)set_StampMap
+{
+    // リストデータの読み込み
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Progress_Reading",@"")];
+    
+    //アプリ内のデータ取得
+    NSMutableArray *Stamp_RecordDataBox = [SqlManager Get_BeconLogList_EffectiveData];
+    
+    switch (Stamp_RecordDataBox.count) {
+        case 1:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:nil];
+            [img_stamp3 setImage:nil];
+            [img_stamp4 setImage:nil];
+            [img_stamp5 setImage:nil];
+            [img_stamp6 setImage:nil];
+            [img_stamp7 setImage:nil];
+            [img_stamp8 setImage:nil];
+            [img_stamp9 setImage:nil];
+            break;
+        case 2:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:nil];
+            [img_stamp4 setImage:nil];
+            [img_stamp5 setImage:nil];
+            [img_stamp6 setImage:nil];
+            [img_stamp7 setImage:nil];
+            [img_stamp8 setImage:nil];
+            [img_stamp9 setImage:nil];
+            break;
+        case 3:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp4 setImage:nil];
+            [img_stamp5 setImage:nil];
+            [img_stamp6 setImage:nil];
+            [img_stamp7 setImage:nil];
+            [img_stamp8 setImage:nil];
+            [img_stamp9 setImage:nil];
+            break;
+        case 4:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp4 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp5 setImage:nil];
+            [img_stamp6 setImage:nil];
+            [img_stamp7 setImage:nil];
+            [img_stamp8 setImage:nil];
+            [img_stamp9 setImage:nil];
+            break;
+        case 5:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp4 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp5 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp6 setImage:nil];
+            [img_stamp7 setImage:nil];
+            [img_stamp8 setImage:nil];
+            [img_stamp9 setImage:nil];
+            break;
+        case 6:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp4 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp5 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp6 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp7 setImage:nil];
+            [img_stamp8 setImage:nil];
+            [img_stamp9 setImage:nil];
+            break;
+        case 7:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp4 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp5 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp6 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp7 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp8 setImage:nil];
+            [img_stamp9 setImage:nil];
+            break;
+        case 8:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp4 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp5 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp6 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp7 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp8 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp9 setImage:nil];
+            break;
+        case 9:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp4 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp5 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp6 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp7 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp8 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp9 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            break;
+        default:
+            [img_stamp1 setImage:nil];
+            [img_stamp2 setImage:nil];
+            [img_stamp3 setImage:nil];
+            [img_stamp4 setImage:nil];
+            [img_stamp5 setImage:nil];
+            [img_stamp6 setImage:nil];
+            [img_stamp7 setImage:nil];
+            [img_stamp8 setImage:nil];
+            [img_stamp9 setImage:nil];
+            break;
+    }
+    
+    //Beacon用通知件数リセット
+    [Configuration setPushBeacon:0];
+    
+    //チケット更新
+    [self readWebData];
+}
+
 // Webからのリストデータ取得
 - (void)readWebData
 {
@@ -260,7 +400,7 @@
           [errAlert show];
       }];
 }
-/////////////// ↑　通信用メソッド　↑　////////////////////
+/////////////// ↑　スタンプ情報更新用メソッド　↑　////////////////////
 
 // アラートのボタンが押された時に呼ばれるメソッド
 -(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

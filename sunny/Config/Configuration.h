@@ -58,7 +58,11 @@
 + (void)setNewsTitle:(NSString*)value;
 
 #pragma mark - PushNews
-+ (BOOL)getPushNews;
-+ (void)setPushNews:(BOOL)value;
++ (long)getPushNews;
++ (void)setPushNews:(long)value;
+
+#pragma mark - PushBeacon
++ (long)getPushBeacon;
++ (void)setPushBeacon:(long)value;
 
 @end

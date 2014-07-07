@@ -29,7 +29,7 @@
             return YES;
             break;
         default:
-            NSLog(@"？？[%d]", status);
+            NSLog(@"？？[%ld]", (long)status);
             return NO;
             break;
     }

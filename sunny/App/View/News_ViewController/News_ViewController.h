@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "NewsView_ListDataModel.h"
 #import "VerticallyAlignedLabel.h"
+#import <AFNetworking/AFNetworking.h>
+#import <SVProgressHUD/SVProgressHUD.h>
+#import "SqlManager.h"
 
 @interface News_ViewController : UIViewController <NSURLConnectionDataDelegate, UIScrollViewDelegate, UIWebViewDelegate>
 {

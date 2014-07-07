@@ -7,9 +7,6 @@
 //
 
 #import "News_ViewController.h"
-#import <AFNetworking/AFNetworking.h>
-#import <SVProgressHUD/SVProgressHUD.h>
-#import "SqlManager.h"
 #import "News_Cell.h"
 #import "UILabel+EstimatedHeight.h"
 #import "ReachabilityCheck.h"
@@ -263,7 +260,7 @@
           
           //MutableArrayへ格納
           NSMutableArray *array_json = (NSMutableArray*)responseObject;
-          
+          //アプリ内のデータ取得
           NSMutableArray *RecordDataBox = [SqlManager Get_ServiceList];
           if(RecordDataBox.count>0){
               long chk_dt1 = [[RecordDataBox[0] valueForKeyPath:@"service_time"] longValue];
