@@ -32,13 +32,13 @@
         // iOS7移行の設定
         //ナビゲーションのバック画像設定
         [[UINavigationBar appearance] setBackgroundColor:[UIColor whiteColor]];
-        UIImage *image = [UIImage imageNamed:@"navibar_320x64.png"];
+        UIImage *image = [UIImage imageNamed:@"navibar_ios7.png"];
         [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
         
     }else{
         // iOS7以下の設定
         //ナビゲーションのバック画像設定
-        UIImage *image = [UIImage imageNamed:@"navibar_320x44.png"];
+        UIImage *image = [UIImage imageNamed:@"navibar_ios6.png"];
         [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     }
     

@@ -13,6 +13,8 @@
 
 @interface Main_UITabBarController () <CLLocationManagerDelegate, CBPeripheralManagerDelegate>
 {
+    //タブバーインスタンス
+    UITabBar *tabBar;
     //Beacon再検出用フラグ
     NSString *str_SerchBeaconMejer;
     NSString *str_SerchBeaconMiner;
@@ -52,20 +54,26 @@ CLBeacon *nearestBeacon;
 {
     [super viewDidLoad];
     
+    self.delegate = self;
+    
     //通知の初期化
     [self sendLocalNotificationForReset];
     
     // 初期起動フラグ設定
     [Configuration setFirstStart:NO];
     
-    //タブバー設定
-    UITabBar *tabBar = self.tabBar;
+    //タブバーインスタンス
+    tabBar = self.tabBar;
     
-    [[tabBar.items objectAtIndex:0] setFinishedSelectedImage:[UIImage imageNamed:@"news_30x30_off.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"news_30x30_on.png"]];
-    [[tabBar.items objectAtIndex:1] setFinishedSelectedImage:[UIImage imageNamed:@"menu_30x30_off.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"menu_30x30_on.png"]];
-    [[tabBar.items objectAtIndex:2] setFinishedSelectedImage:[UIImage imageNamed:@"shop_30x30_off.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"shop_30x30_on.png"]];
-    [[tabBar.items objectAtIndex:3] setFinishedSelectedImage:[UIImage imageNamed:@"stamp_30x30_off.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"stamp_30x30_on.png"]];
-    [[tabBar.items objectAtIndex:4] setFinishedSelectedImage:[UIImage imageNamed:@"other_30x30_off.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"other_30x30_on.png"]];
+    [[tabBar.items objectAtIndex:0] setFinishedSelectedImage:[UIImage imageNamed:@"news_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"news_off.png"]];
+    [[tabBar.items objectAtIndex:1] setFinishedSelectedImage:[UIImage imageNamed:@"menu_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"menu_off.png"]];
+    [[tabBar.items objectAtIndex:2] setFinishedSelectedImage:[UIImage imageNamed:@"shop_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"shop_off.png"]];
+    if([Configuration getPushBeacon] == 0){
+        [[tabBar.items objectAtIndex:3] setFinishedSelectedImage:[UIImage imageNamed:@"stamp_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"stamp_off.png"]];
+    }else{
+        [[tabBar.items objectAtIndex:3] setFinishedSelectedImage:[UIImage imageNamed:@"stamp_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"stamp_off_get.png"]];
+    }
+    [[tabBar.items objectAtIndex:4] setFinishedSelectedImage:[UIImage imageNamed:@"other_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"other_off.png"]];
     
     //タブ背景・選択背景設定
     [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_background.png"]];
@@ -76,11 +84,19 @@ CLBeacon *nearestBeacon;
     [[UITabBarItem appearance] setTitlePositionAdjustment:UIOffsetMake(0, -4)];
     
     //TabBarに表示されるテキストのフォントとサイズを指定
-    //タブバーの文字色と文字サイズを設定(選択前)
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.831 green:0.533 blue:0.008 alpha:1.000], NSForegroundColorAttributeName,[UIFont systemFontOfSize:8.500], NSForegroundColorAttributeName,nil] forState:UIControlStateNormal];
-    //タブバーの文字色と文字サイズを設定(選択中)
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:1.000 green:1.000 blue:1.000 alpha:1.000], NSForegroundColorAttributeName,[UIFont systemFontOfSize:8.500], NSForegroundColorAttributeName,nil] forState:UIControlStateSelected];
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:9.0f];
+    //タブ選択時のフォントとカラー
+    NSDictionary *selectedAttributes = @{NSFontAttributeName:font,
+                                         NSForegroundColorAttributeName:[UIColor colorWithRed:1.000 green:1.000 blue:1.000 alpha:1.000]};
     
+    [[UITabBarItem appearance] setTitleTextAttributes:selectedAttributes
+                                             forState:UIControlStateSelected];
+    //通常時のフォントとカラー
+    NSDictionary *attributesNormal = @{NSFontAttributeName:font,
+                                       NSForegroundColorAttributeName:[UIColor colorWithRed:0.831 green:0.533 blue:0.008 alpha:1.000]};
+    
+    [[UITabBarItem appearance] setTitleTextAttributes:attributesNormal
+                                             forState:UIControlStateNormal];
     
     //通知の初期化
     [self sendLocalNotificationForReset];
@@ -137,6 +153,14 @@ CLBeacon *nearestBeacon;
 - (void)dealloc {
     str_SerchBeaconMejer = @"";
     str_SerchBeaconMiner = @"";
+}
+
+// タブが切替られたときに呼び出されるデリゲートメソッド
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    
+    if(tabBarController.selectedIndex == 3){
+        [[tabBar.items objectAtIndex:3] setFinishedSelectedImage:[UIImage imageNamed:@"stamp_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"stamp_off.png"]];
+    }
 }
 
 ///////////////////////// ↓　通信用メソッド　↓　//////////////////////////////
@@ -265,8 +289,11 @@ CLBeacon *nearestBeacon;
             beaconLogDataModel.log_state = 0;
             
             if([SqlManager Set_BeconLogList:beaconLogDataModel] == YES){
+                
+                //タブ画像更新
+                [[tabBar.items objectAtIndex:3] setFinishedSelectedImage:[UIImage imageNamed:@"stamp_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"stamp_off_get.png"]];
                 //ローカル通知
-                [self sendLocalNotificationForMessage];
+                //[self sendLocalNotificationForMessage];
                 
                 //Beacon用通知件数セット
                 [Configuration setPushBeacon:[Configuration getPushBeacon]+1];

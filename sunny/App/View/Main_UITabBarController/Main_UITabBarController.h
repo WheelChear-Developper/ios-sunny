@@ -11,10 +11,9 @@
 #import "Beacon_LogListDataModel.h"
 #import "SqlManager.h"
 
-@interface Main_UITabBarController : UITabBarController
+@interface Main_UITabBarController : UITabBarController <UITabBarControllerDelegate>
 {
     UITabBarController *_rootController;
-//    UIAlertView *errAlert_exit;
 }
 #pragma mark - property
 @property (strong, nonatomic) UIWindow *window;
