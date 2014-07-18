@@ -1645,44 +1645,56 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="stamp-form.png" id="QfK-Nk-oWF">
-                                        <rect key="frame" x="20" y="0.0" width="280" height="280"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="280"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="VZw-Bv-4jM">
-                                        <rect key="frame" x="37" y="17" width="80" height="80"/>
+                                        <rect key="frame" x="19" y="26" width="62" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Cba-y1-vDI">
-                                        <rect key="frame" x="121" y="17" width="80" height="80"/>
+                                        <rect key="frame" x="91" y="26" width="62" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="AOG-ry-UBs">
-                                        <rect key="frame" x="205" y="17" width="80" height="80"/>
+                                        <rect key="frame" x="166" y="26" width="62" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="cIB-ts-S1Z">
-                                        <rect key="frame" x="37" y="102" width="80" height="80"/>
+                                        <rect key="frame" x="238" y="26" width="62" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="zvD-Qe-jvi">
-                                        <rect key="frame" x="37" y="186" width="80" height="80"/>
+                                        <rect key="frame" x="166" y="111" width="62" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="eNO-6Z-rRh">
-                                        <rect key="frame" x="121" y="102" width="80" height="80"/>
+                                        <rect key="frame" x="19" y="111" width="62" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="rYu-yz-q4H">
-                                        <rect key="frame" x="205" y="102" width="80" height="80"/>
+                                        <rect key="frame" x="91" y="111" width="62" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="e6Z-yK-bB1">
-                                        <rect key="frame" x="121" y="186" width="80" height="80"/>
+                                        <rect key="frame" x="238" y="111" width="62" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7As-1s-1df">
-                                        <rect key="frame" x="205" y="186" width="80" height="80"/>
+                                        <rect key="frame" x="19" y="195" width="62" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Ezy-EK-dZh">
+                                        <rect key="frame" x="91" y="195" width="62" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="62D-lo-PMi">
+                                        <rect key="frame" x="166" y="195" width="62" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Rmb-vg-oRC">
+                                        <rect key="frame" x="238" y="195" width="62" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
@@ -1752,7 +1764,7 @@
         <image name="sns_icon_facebook.png" width="30" height="30"/>
         <image name="sns_icon_line.png" width="30" height="30"/>
         <image name="sns_icon_twitter.png" width="30" height="30"/>
-        <image name="stamp-form.png" width="280" height="280"/>
+        <image name="stamp-form.png" width="320" height="280"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
