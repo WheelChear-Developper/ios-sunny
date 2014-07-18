@@ -22,7 +22,7 @@
 
 + (UIColor*)setButtonCharColor
 {
-    return [UIColor colorWithRed:0.561 green:0.082 blue:0.082 alpha:1.0];
+    return [UIColor colorWithRed:1.000 green:1.000 blue:1.000 alpha:1.0];
 }
 
 @end

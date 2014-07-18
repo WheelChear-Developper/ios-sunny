@@ -43,8 +43,6 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
     //BackColor
     Table_View.backgroundColor = [SetColor setBackGroundColor];
     
@@ -76,8 +74,6 @@
 // 起動・再開の時に起動するメソッド
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    
     if(_News_TotalDataBox.count == 0){
         // リストデータの読み込み
         [SVProgressHUD showWithStatus:NSLocalizedString(@"Progress_Reading",@"")];
@@ -87,6 +83,8 @@
         [SVProgressHUD showWithStatus:NSLocalizedString(@"Progress_Reading",@"")];
         [self readWebData];
     }
+    
+    [super viewWillAppear:animated];
 }
 
 // 画面の表示の時に起動するメソッド

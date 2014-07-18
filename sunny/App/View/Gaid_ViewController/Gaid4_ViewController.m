@@ -84,6 +84,8 @@
 - (void)btn_Next:(id)sender
 {
     if([Configuration getFirstStart]){
+        //初期起動フラグ設定
+        [Configuration setFirstStart:NO];
         //初期起動の場合
         UIViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Main_UITabBarContoroller"];
         [self presentViewController:viewController animated:NO completion:nil];

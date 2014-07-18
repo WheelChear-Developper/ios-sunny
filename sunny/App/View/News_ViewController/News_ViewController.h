@@ -13,7 +13,7 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "SqlManager.h"
 
-@interface News_ViewController : UIViewController <NSURLConnectionDataDelegate, UIScrollViewDelegate, UIWebViewDelegate>
+@interface News_ViewController : UIViewController
 {
     // テーブルビュー
     IBOutlet UITableView *Table_View;

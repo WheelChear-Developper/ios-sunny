@@ -121,7 +121,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(10.0f, 0.0f, 320.0f, 44)];
-    UIImage *headerImage = [UIImage imageNamed:@"shop_title.png"];
+    UIImage *headerImage = [UIImage imageNamed:@"shop_koumoku.png"];
     UIImageView *headerImageView = [[UIImageView alloc] initWithImage:headerImage];
     headerImageView.frame = CGRectMake(10.0f, 0.0f, 300.0f, 44);
     

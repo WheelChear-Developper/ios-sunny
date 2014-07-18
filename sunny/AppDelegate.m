@@ -24,23 +24,16 @@
                                                       UIRemoteNotificationTypeSound|
                                                       UIRemoteNotificationTypeAlert)];
     
-    // Background Fetchの準備
+    //バックグラウンド処理の登録
 	[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
-    // iOS6/7でのレイアウト互換設定
-    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
-        // iOS7移行の設定
-        //ナビゲーションのバック画像設定
-        [[UINavigationBar appearance] setBackgroundColor:[UIColor whiteColor]];
-        UIImage *image = [UIImage imageNamed:@"navibar_ios7.png"];
-        [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-        
-    }else{
-        // iOS7以下の設定
-        //ナビゲーションのバック画像設定
-        UIImage *image = [UIImage imageNamed:@"navibar_ios6.png"];
-        [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-    }
+    //ナビゲーションのバック画像設定
+    UIImage *image = [UIImage imageNamed:@"navibar_ios7.png"];
+    [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    //ステータスバーの文字色設定
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    //ステータスバーの非表示から表示へ
+    [UIApplication sharedApplication].statusBarHidden = NO;
     
     //起動方法振り分け
     if([Configuration getFirstStart]){

@@ -59,9 +59,6 @@ CLBeacon *nearestBeacon;
     //通知の初期化
     [self sendLocalNotificationForReset];
     
-    // 初期起動フラグ設定
-    [Configuration setFirstStart:NO];
-    
     //タブバーインスタンス
     tabBar = self.tabBar;
     
