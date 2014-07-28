@@ -76,18 +76,33 @@ static NSString *CONFIGURATION_TOPIC_ID = @"Configuration.Topic_ID";
     [userDefaults synchronize];
 }
 
-#pragma mark - PushNotifications
-static NSString *CONFIGURATION_PUSH_NOTIFICATIONS = @"Configuration.PushNotifications";
-+ (BOOL)getPushNotifications
+#pragma mark - PushNotificationsNews
+static NSString *CONFIGURATION_PUSH_NOTIFICATIONSNEWS = @"Configuration.PushNotificationsNews";
++ (BOOL)getPushNotificationsNews
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults registerDefaults:@{CONFIGURATION_PUSH_NOTIFICATIONS : @(YES)}];
-    return [userDefaults boolForKey:CONFIGURATION_PUSH_NOTIFICATIONS];
+    [userDefaults registerDefaults:@{CONFIGURATION_PUSH_NOTIFICATIONSNEWS : @(YES)}];
+    return [userDefaults boolForKey:CONFIGURATION_PUSH_NOTIFICATIONSNEWS];
 }
-+ (void)setPushNotifications:(BOOL)value
++ (void)setPushNotificationsNews:(BOOL)value
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:value forKey:CONFIGURATION_PUSH_NOTIFICATIONS];
+    [userDefaults setBool:value forKey:CONFIGURATION_PUSH_NOTIFICATIONSNEWS];
+    [userDefaults synchronize];
+}
+
+#pragma mark - PushNotificationsBeacon
+static NSString *CONFIGURATION_PUSH_NOTIFICATIONSBEACON = @"Configuration.PushNotificationsBeacon";
++ (BOOL)getPushNotificationsBeacon
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults registerDefaults:@{CONFIGURATION_PUSH_NOTIFICATIONSBEACON : @(YES)}];
+    return [userDefaults boolForKey:CONFIGURATION_PUSH_NOTIFICATIONSBEACON];
+}
++ (void)setPushNotificationsBeacon:(BOOL)value
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:value forKey:CONFIGURATION_PUSH_NOTIFICATIONSBEACON];
     [userDefaults synchronize];
 }
 

@@ -18,6 +18,8 @@
     //Beacon再検出用フラグ
     NSString *str_SerchBeaconMejer;
     NSString *str_SerchBeaconMiner;
+    
+    UIAlertView *beaconAlert;
 }
 //ロケーションマネージャー
 @property (nonatomic) CLLocationManager *locationManager;
@@ -104,9 +106,9 @@ CLBeacon *nearestBeacon;
         self.locationManager.delegate = self;
         
         //ビーコンアプリごとに設定するUUID
-        self.proximityUUID = [[NSUUID alloc] initWithUUIDString:@"A7466A9F-905B-1801-94CC-001C4DCA52B9"];
+        self.proximityUUID = [[NSUUID alloc] initWithUUIDString:NSLocalizedString(@"Service_BeaconUUID",@"")];
         self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:self.proximityUUID
-                                                               identifier:@"jp.mobile-innovation.testapp"];
+                                                               identifier:@"com.akafune.sunny"];
         //Bluetooth確認
         self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil];
         //送信解除
@@ -114,6 +116,12 @@ CLBeacon *nearestBeacon;
     } else {
         NSLog(@"お使いの端末ではiBeaconを利用できません。");
     }
+}
+
+// 起動・再開の時に起動するメソッド
+- (void)viewWillAppear:(BOOL)animated
+{
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -191,45 +199,15 @@ CLBeacon *nearestBeacon;
         [Configuration setProfileName:[jsonParser valueForKeyPath:@"name"]];
         // Token設定(設定されていない場合のみ設定)
         [Configuration setToken:[jsonParser valueForKeyPath:@"token"]];
-    }else{
-/*
-        errAlert_exit = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Dialog_API_NotConnectTitleMsg",@"")
-                                                   message:nil
-                                                  delegate:self
-                                         cancelButtonTitle:NSLocalizedString(@"Dialog_API_NotConnectMsg",@"")
-                                         otherButtonTitles:nil];
-        [errAlert_exit show];
- */
     }
 }
 
 //通信エラー時に呼ばれる
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-/*
-    // 通信エラーメッセージ表示
-    errAlert_exit = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Dialog_API_NotConnectTitleMsg",@"")
-                                               message:nil
-                                              delegate:self
-                                     cancelButtonTitle:NSLocalizedString(@"Dialog_API_NotConnectMsg",@"")
-                                     otherButtonTitles:nil];
-    [errAlert_exit show];
-*/
+
 }
 
-// アラートのボタンが押された時に呼ばれるデリゲート例文
--(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-/*
-    if(alertView == errAlert_exit){
-        switch (buttonIndex) {
-            case 0:
-//                exit(0);
-                break;
-        }
-    }
-*/
-}
 ///////////////////////// ↑　通信用メソッド　↑　//////////////////////////////
 
 
@@ -279,30 +257,29 @@ CLBeacon *nearestBeacon;
             Beacon_LogListDataModel *beaconLogDataModel = [[Beacon_LogListDataModel alloc] init];
             beaconLogDataModel.log_date = nowDate;
             beaconLogDataModel.log_UUID = nearestBeacon.proximityUUID.UUIDString;
-            beaconLogDataModel.log_major = (NSString*)nearestBeacon.major;
-            beaconLogDataModel.log_minor = (NSString*)nearestBeacon.minor;
-            beaconLogDataModel.log_proximity = (long)nearestBeacon.proximity;
-            beaconLogDataModel.log_accuracy = (double)nearestBeacon.accuracy;
+            beaconLogDataModel.log_major = nearestBeacon.major.intValue;
+            beaconLogDataModel.log_minor = nearestBeacon.minor.intValue;
+            beaconLogDataModel.log_rssi = nearestBeacon.rssi;
+            beaconLogDataModel.log_accuracy = nearestBeacon.accuracy;
             beaconLogDataModel.log_state = 0;
             
             if([SqlManager Set_BeconLogList:beaconLogDataModel] == YES){
                 
                 //タブ画像更新
                 [[tabBar.items objectAtIndex:3] setFinishedSelectedImage:[UIImage imageNamed:@"stamp_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"stamp_off_get.png"]];
-                //ローカル通知
-                //[self sendLocalNotificationForMessage];
                 
-                //Beacon用通知件数セット
-                [Configuration setPushBeacon:[Configuration getPushBeacon]+1];
-                
-                // オフラインで表示
-                UIAlertView *errAlert = [[UIAlertView alloc] initWithTitle:@"スタンプの来店情報を受信"
-                                                                   message:@"スタンプを追加しました。"
-                                                                  delegate:self
-                                                         cancelButtonTitle:NSLocalizedString(@"Dialog_KakuninMsg",@"")
-                                                         otherButtonTitles:nil];
-                [errAlert show];
-                
+                if([Configuration getPushNotificationsBeacon]){
+                    //ローカル通知
+                    [self sendLocalNotificationForMessage];
+                    
+                    //beacon通知
+                    beaconAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Dialog_ShopInTitleBeaconMsg",@"")
+                                                             message:NSLocalizedString(@"Dialog_ShopInBeaconMsg",@"")
+                                                            delegate:self
+                                                   cancelButtonTitle:NSLocalizedString(@"Dialog_No",@"")
+                                                   otherButtonTitles:NSLocalizedString(@"Dialog_Yes",@""),nil];
+                    [beaconAlert show];
+                }
                 //サーバー情報同期処理
                 [SqlManager set_BeconLogList_serverReUp];
             }
@@ -314,14 +291,31 @@ CLBeacon *nearestBeacon;
     }
 }
 
+// アラートのボタンが押された時に呼ばれるデリゲート例文
+-(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if(alertView == beaconAlert){
+        switch (buttonIndex) {
+            case 0:
+                break;
+            case 1:
+                [self setSelectedIndex:3];
+                break;
+        }
+    }
+}
+
 #pragma mark - Private methods
 //通知の初期化
 -(void)sendLocalNotificationForReset
 {
     //通知の初期化
     localNotification = [UILocalNotification new];
-    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3]; //3秒後
-    localNotification.applicationIconBadgeNumber = -1;
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3];
+    //通知件数セット
+    NSLog(@"notication news=%ld beacon=%ld",[Configuration getPushNews],[Configuration getPushBeacon]);
+    localNotification.applicationIconBadgeNumber =  [Configuration getPushNews] + [Configuration getPushBeacon];
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
@@ -331,8 +325,12 @@ CLBeacon *nearestBeacon;
     //通知
     localNotification.alertBody = NSLocalizedString(@"beacon_Infomation",@"");
     localNotification.fireDate = [NSDate date];
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    localNotification.applicationIconBadgeNumber = 1;
+    localNotification.soundName = @"music1.caf";
+    //ニュースプッシュ通知追加
+    [Configuration setPushBeacon:[Configuration getPushBeacon]+1];
+    //通知件数セット
+    NSLog(@"notication news=%ld beacon=%ld",[Configuration getPushNews],[Configuration getPushBeacon]);
+    localNotification.applicationIconBadgeNumber =  [Configuration getPushNews] + [Configuration getPushBeacon];
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 

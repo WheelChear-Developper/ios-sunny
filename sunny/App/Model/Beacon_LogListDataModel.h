@@ -13,9 +13,9 @@
 @property(nonatomic) long log_record_id;
 @property(nonatomic, strong) NSDate *log_date;      //取得日付
 @property(nonatomic, copy) NSString *log_UUID;      //UUID
-@property(nonatomic, copy) NSString *log_major;     //機器番号１
-@property(nonatomic, copy) NSString *log_minor;     //機器番号２
-@property(nonatomic) long log_proximity;            //認識距離
+@property(nonatomic) NSInteger log_major;           //機器番号１
+@property(nonatomic) NSInteger log_minor;           //機器番号２
+@property(nonatomic) long log_rssi;                 //認識距離
 @property(nonatomic) double log_accuracy;           //精度
 @property(nonatomic) long log_state;                //ログ保存のサーバーへの状態（０：未登録、１：登録済み）
 @end

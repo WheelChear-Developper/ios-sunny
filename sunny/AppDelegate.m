@@ -50,18 +50,15 @@
     return YES;
 }
 
-// 終了処理
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    
+
 }
 
 // 終了処理
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // 通知のセット
-    [Configuration setPushNews:0];
-    application.applicationIconBadgeNumber = [Configuration getPushNews] + [Configuration getPushBeacon];
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -71,8 +68,11 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // 通知のリセット
-    application.applicationIconBadgeNumber = 0;
+    //ニュースプッシュ通知リセット
+    [Configuration setPushNews:0];
+    //通知件数セット
+    NSLog(@"notication news=%ld beacon=%ld",[Configuration getPushNews],[Configuration getPushBeacon]);
+    application.applicationIconBadgeNumber =  [Configuration getPushNews] + [Configuration getPushBeacon];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -126,9 +126,11 @@ didRegisterForRemoteNotificationsWithError:(NSError *)err
 didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     if (application.applicationState == UIApplicationStateActive){
-        if([Configuration getPushNotifications]){
+        if([Configuration getPushNotificationsNews]){
             //ニュースプッシュ通知ON
             [Configuration setPushNews:1];
+            //通知件数セット
+            [UIApplication sharedApplication].applicationIconBadgeNumber = [Configuration getPushNews] + [Configuration getPushBeacon];
             // 通信エラーメッセージ表示
             UIAlertView *errAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Dialog_SiteReupMsg",@"")
                                                                message:nil

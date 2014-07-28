@@ -71,9 +71,9 @@
     NSString* tbl2_sql2 = @" log_record_id   INTEGER UNIQUE PRIMARY KEY,";
     NSString* tbl2_sql3 = @" log_date        DATETIME,";
     NSString* tbl2_sql4 = @" log_UUID        TEXT,";
-    NSString* tbl2_sql5 = @" log_major       TEXT,";
-    NSString* tbl2_sql6 = @" log_minor       TEXT,";
-    NSString* tbl2_sql7 = @" log_proximity   INTEGER,";
+    NSString* tbl2_sql5 = @" log_major       INTEGER,";
+    NSString* tbl2_sql6 = @" log_minor       INTEGER,";
+    NSString* tbl2_sql7 = @" log_rssi        INTEGER,";
     NSString* tbl2_sql8 = @" log_accuracy    REAL,";
     NSString* tbl2_sql9 = @" log_state       INTEGER);";
     NSString* tbl2_MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@", tbl2_sql1, tbl2_sql2, tbl2_sql3, tbl2_sql4, tbl2_sql5, tbl2_sql6, tbl2_sql7, tbl2_sql8, tbl2_sql9];
@@ -200,13 +200,14 @@
     NSString* Sql4 = @" log_uuid,";
     NSString* Sql5 = @" log_major,";
     NSString* Sql6 = @" log_minor,";
-    NSString* Sql7 = @" log_proximity,";
+    NSString* Sql7 = @" log_rssi,";
     NSString* Sql8 = @" log_accuracy";
     NSString* Sql9 = @" FROM tbl_becon_log";
     NSString* Sql10 = @" WHERE";
-    NSString* Sql11 = [NSString stringWithFormat:@" '%@' >= log_date AND log_date <= '%@';", dt_start, dt_end];
-    NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",Sql1,Sql2,Sql3,Sql4,Sql5,Sql6,Sql7,Sql8,Sql9,Sql10,Sql11];
-    FMResultSet* results = [DbAccess executeQuery:MakeSQL];
+    NSString* Sql11 = @" ? <= log_date AND log_date <= ?";
+    NSString* Sql12 = [NSString stringWithFormat:@" AND log_major = %i AND log_minor = %i;", bicon_logDataListset.log_major, bicon_logDataListset.log_minor];
+    NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@",Sql1,Sql2,Sql3,Sql4,Sql5,Sql6,Sql7,Sql8,Sql9,Sql10,Sql11,Sql12];
+    FMResultSet* results = [DbAccess executeQuery:MakeSQL,dt_start,dt_end];
     if (!results) {
         NSLog(@"ERROR: %d: %@", [DbAccess lastErrorCode], [DbAccess lastErrorMessage]);
     }
@@ -222,12 +223,12 @@
     if(bln_chkday == NO){
         //データ保存
         NSString* sql1 = @"INSERT INTO tbl_becon_log";
-        NSString* sql2 = @" (log_date, log_uuid, log_major, log_minor, log_proximity, log_accuracy, log_state) VALUES ";
-        NSString* sql3 = [NSString stringWithFormat:@"( ?, '%@', '%@', '%@', %ld, %f, %ld);",
+        NSString* sql2 = @" (log_date, log_uuid, log_major, log_minor, log_rssi, log_accuracy, log_state) VALUES ";
+        NSString* sql3 = [NSString stringWithFormat:@"( ?, '%@', %i, %i, %ld, %f, %ld);",
                           bicon_logDataListset.log_UUID,
                           bicon_logDataListset.log_major,
                           bicon_logDataListset.log_minor,
-                          bicon_logDataListset.log_proximity,
+                          bicon_logDataListset.log_rssi,
                           bicon_logDataListset.log_accuracy,
                           bicon_logDataListset.log_state];
         NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@",sql1, sql2, sql3];
@@ -258,7 +259,7 @@
     NSString* Sql4 = @" log_uuid,";
     NSString* Sql5 = @" log_major,";
     NSString* Sql6 = @" log_minor,";
-    NSString* Sql7 = @" log_proximity,";
+    NSString* Sql7 = @" log_rssi,";
     NSString* Sql8 = @" log_accuracy,";
     NSString* Sql9 = @" log_state";
     NSString* Sql10 = @" FROM tbl_becon_log";
@@ -279,9 +280,9 @@
         beaconLogDataModel.log_record_id = [results longForColumn:@"log_record_id"];
         beaconLogDataModel.log_date = [results dateForColumn:@"log_date"];
         beaconLogDataModel.log_UUID = [results stringForColumn:@"log_uuid"];
-        beaconLogDataModel.log_major = [results stringForColumn:@"log_major"];
-        beaconLogDataModel.log_minor = [results stringForColumn:@"log_minor"];
-        beaconLogDataModel.log_proximity = [results longForColumn:@"log_proximity"];
+        beaconLogDataModel.log_major = [results longForColumn:@"log_major"];
+        beaconLogDataModel.log_minor = [results longForColumn:@"log_minor"];
+        beaconLogDataModel.log_rssi = [results longForColumn:@"log_rssi"];
         beaconLogDataModel.log_accuracy = [results doubleForColumn:@"log_accuracy"];
         beaconLogDataModel.log_state = [results longForColumn:@"log_state"];
         [dbBox addObject:beaconLogDataModel];
@@ -318,7 +319,7 @@
     NSString* Sql4 = @" log_uuid,";
     NSString* Sql5 = @" log_major,";
     NSString* Sql6 = @" log_minor,";
-    NSString* Sql7 = @" log_proximity,";
+    NSString* Sql7 = @" log_rssi,";
     NSString* Sql8 = @" log_accuracy,";
     NSString* Sql9 = @" log_state";
     NSString* Sql10 = @" FROM tbl_becon_log";
@@ -339,9 +340,9 @@
         beaconLogDataModel.log_record_id = [results longForColumn:@"log_record_id"];
         beaconLogDataModel.log_date = [results dateForColumn:@"log_date"];
         beaconLogDataModel.log_UUID = [results stringForColumn:@"log_uuid"];
-        beaconLogDataModel.log_major = [results stringForColumn:@"log_major"];
-        beaconLogDataModel.log_minor = [results stringForColumn:@"log_minor"];
-        beaconLogDataModel.log_proximity = [results longForColumn:@"log_proximity"];
+        beaconLogDataModel.log_major = [results longForColumn:@"log_major"];
+        beaconLogDataModel.log_minor = [results longForColumn:@"log_minor"];
+        beaconLogDataModel.log_rssi = [results longForColumn:@"log_rssi"];
         beaconLogDataModel.log_accuracy = [results doubleForColumn:@"log_accuracy"];
         beaconLogDataModel.log_state = [results longForColumn:@"log_state"];
         [dbBox addObject:beaconLogDataModel];
@@ -381,12 +382,12 @@
     NSString* Sql4 = @" log_uuid,";
     NSString* Sql5 = @" log_major,";
     NSString* Sql6 = @" log_minor,";
-    NSString* Sql7 = @" log_proximity,";
+    NSString* Sql7 = @" log_rssi,";
     NSString* Sql8 = @" log_accuracy,";
     NSString* Sql9 = @" log_state";
     NSString* Sql10 = @" FROM tbl_becon_log";
     NSString* Sql11 = @" WHERE";
-    NSString* Sql12 = [NSString stringWithFormat:@" '%@' >= log_date AND log_date <= '%@';", dt_start, dt_end];
+    NSString* Sql12 = [NSString stringWithFormat:@" '%@' <= log_date AND log_date <= '%@';", dt_start, dt_end];
     NSString* MakeSQL = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@",Sql1,Sql2,Sql3,Sql4,Sql5,Sql6,Sql7,Sql8,Sql9,Sql10,Sql11,Sql12];
     FMResultSet* results = [DbAccess executeQuery:MakeSQL];
     if (!results) {
@@ -401,9 +402,9 @@
         beaconLogDataModel.log_record_id = [results longForColumn:@"log_record_id"];
         beaconLogDataModel.log_date = [results dateForColumn:@"log_date"];
         beaconLogDataModel.log_UUID = [results stringForColumn:@"log_uuid"];
-        beaconLogDataModel.log_major = [results stringForColumn:@"log_major"];
-        beaconLogDataModel.log_minor = [results stringForColumn:@"log_minor"];
-        beaconLogDataModel.log_proximity = [results longForColumn:@"log_proximity"];
+        beaconLogDataModel.log_major = [results longForColumn:@"log_major"];
+        beaconLogDataModel.log_minor = [results longForColumn:@"log_minor"];
+        beaconLogDataModel.log_rssi = [results longForColumn:@"log_rssi"];
         beaconLogDataModel.log_accuracy = [results doubleForColumn:@"log_accuracy"];
         beaconLogDataModel.log_state = [results longForColumn:@"log_state"];
         [dbBox addObject:beaconLogDataModel];

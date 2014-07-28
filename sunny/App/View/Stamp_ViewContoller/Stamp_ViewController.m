@@ -96,6 +96,12 @@
 // 起動・再開の時に起動するメソッド
 - (void)viewWillAppear:(BOOL)animated
 {
+    //ビーコンプッシュ通知の件数初期化
+    [Configuration setPushBeacon:0];
+    //通知件数セット
+    NSLog(@"notication news=%ld beacon=%ld",[Configuration getPushNews],[Configuration getPushBeacon]);
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [Configuration getPushNews] + [Configuration getPushBeacon];
+    
     [super viewWillAppear:animated];
 }
 
@@ -230,6 +236,9 @@
             [img_stamp7 setImage:nil];
             [img_stamp8 setImage:nil];
             [img_stamp9 setImage:nil];
+            [img_stamp10 setImage:nil];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
             break;
         case 2:
             [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
@@ -241,6 +250,9 @@
             [img_stamp7 setImage:nil];
             [img_stamp8 setImage:nil];
             [img_stamp9 setImage:nil];
+            [img_stamp10 setImage:nil];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
             break;
         case 3:
             [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
@@ -252,6 +264,9 @@
             [img_stamp7 setImage:nil];
             [img_stamp8 setImage:nil];
             [img_stamp9 setImage:nil];
+            [img_stamp10 setImage:nil];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
             break;
         case 4:
             [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
@@ -263,6 +278,9 @@
             [img_stamp7 setImage:nil];
             [img_stamp8 setImage:nil];
             [img_stamp9 setImage:nil];
+            [img_stamp10 setImage:nil];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
             break;
         case 5:
             [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
@@ -274,6 +292,9 @@
             [img_stamp7 setImage:nil];
             [img_stamp8 setImage:nil];
             [img_stamp9 setImage:nil];
+            [img_stamp10 setImage:nil];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
             break;
         case 6:
             [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
@@ -285,6 +306,9 @@
             [img_stamp7 setImage:nil];
             [img_stamp8 setImage:nil];
             [img_stamp9 setImage:nil];
+            [img_stamp10 setImage:nil];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
             break;
         case 7:
             [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
@@ -296,6 +320,9 @@
             [img_stamp7 setImage:[UIImage imageNamed:@"stamp_1.png"]];
             [img_stamp8 setImage:nil];
             [img_stamp9 setImage:nil];
+            [img_stamp10 setImage:nil];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
             break;
         case 8:
             [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
@@ -307,6 +334,9 @@
             [img_stamp7 setImage:[UIImage imageNamed:@"stamp_1.png"]];
             [img_stamp8 setImage:[UIImage imageNamed:@"stamp_1.png"]];
             [img_stamp9 setImage:nil];
+            [img_stamp10 setImage:nil];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
             break;
         case 9:
             [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
@@ -318,6 +348,51 @@
             [img_stamp7 setImage:[UIImage imageNamed:@"stamp_1.png"]];
             [img_stamp8 setImage:[UIImage imageNamed:@"stamp_1.png"]];
             [img_stamp9 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp10 setImage:nil];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
+            break;
+        case 10:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp4 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp5 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp6 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp7 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp8 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp9 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp10 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
+            break;
+        case 11:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp4 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp5 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp6 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp7 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp8 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp9 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp10 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp11 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp12 setImage:nil];
+            break;
+        case 12:
+            [img_stamp1 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp2 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp3 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp4 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp5 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp6 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp7 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp8 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp9 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp10 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp11 setImage:[UIImage imageNamed:@"stamp_1.png"]];
+            [img_stamp12 setImage:[UIImage imageNamed:@"stamp_1.png"]];
             break;
         default:
             [img_stamp1 setImage:nil];
@@ -329,11 +404,11 @@
             [img_stamp7 setImage:nil];
             [img_stamp8 setImage:nil];
             [img_stamp9 setImage:nil];
+            [img_stamp10 setImage:nil];
+            [img_stamp11 setImage:nil];
+            [img_stamp12 setImage:nil];
             break;
     }
-    
-    //Beacon用通知件数リセット
-    [Configuration setPushBeacon:0];
     
     //チケット更新
     [self readWebData];

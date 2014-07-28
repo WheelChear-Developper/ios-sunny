@@ -24,6 +24,8 @@
     __weak IBOutlet UIImageView *img_stamp7;
     __weak IBOutlet UIImageView *img_stamp8;
     __weak IBOutlet UIImageView *img_stamp9;
-    
+    __weak IBOutlet UIImageView *img_stamp10;
+    __weak IBOutlet UIImageView *img_stamp11;
+    __weak IBOutlet UIImageView *img_stamp12;
 }
 @end

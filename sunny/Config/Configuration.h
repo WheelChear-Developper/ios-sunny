@@ -29,9 +29,13 @@
 + (NSInteger)getTopic_ID;
 + (void)setTopic_ID:(NSInteger)value;
 
-#pragma mark - PushNotifications
-+ (BOOL)getPushNotifications;
-+ (void)setPushNotifications:(BOOL)value;
+#pragma mark - PushNotificationsNews
++ (BOOL)getPushNotificationsNews;
++ (void)setPushNotificationsNews:(BOOL)value;
+
+#pragma mark - PushNotificationsBeacon
++ (BOOL)getPushNotificationsBeacon;
++ (void)setPushNotificationsBeacon:(BOOL)value;
 
 #pragma mark - WebURL
 + (NSString*)getWebURL;

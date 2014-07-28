@@ -81,13 +81,19 @@
 //設定画面の再設定
 -(void)viewWillAppear:(BOOL)animated
 {
-    if([Configuration getPushNotifications] == NO){
-        [Sw_PushNotificationSet setOn:NO animated:NO];
+    if([Configuration getPushNotificationsNews] == NO){
+        [Sw_PushNotificationNewsSet setOn:NO animated:NO];
     }else{
-        [Sw_PushNotificationSet setOn:YES animated:NO];
+        [Sw_PushNotificationNewsSet setOn:YES animated:NO];
     }
     
-    lbl_userID.text = [@"ユーザーNo." stringByAppendingString:[Configuration getProfileID]];
+    if([Configuration getPushNotificationsBeacon] == NO){
+        [Sw_PushNotificationBeaconSet setOn:NO animated:NO];
+    }else{
+        [Sw_PushNotificationBeaconSet setOn:YES animated:NO];
+    }
+    
+    lbl_userID.text = [@"お客様番号 " stringByAppendingString:[Configuration getProfileID]];
     txt_userName.text = [Configuration getProfileName];
 }
 
@@ -155,14 +161,25 @@ shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)strin
     [self.view endEditing: YES];
 }
 
-- (IBAction)Sw_PushNotificationSet:(id)sender
+- (IBAction)Sw_PushNotificationNewsSet:(id)sender
 {
-    if([Configuration getPushNotifications] == NO){
-        [Configuration setPushNotifications:YES];
-        [Sw_PushNotificationSet setOn:YES animated:YES];
+    if([Configuration getPushNotificationsNews] == NO){
+        [Configuration setPushNotificationsNews:YES];
+        [Sw_PushNotificationNewsSet setOn:YES animated:YES];
     }else{
-        [Configuration setPushNotifications:NO];
-        [Sw_PushNotificationSet setOn:NO animated:YES];
+        [Configuration setPushNotificationsNews:NO];
+        [Sw_PushNotificationNewsSet setOn:NO animated:YES];
+    }
+}
+
+- (IBAction)Sw_PushNotificationBeaconSet:(id)sender
+{
+    if([Configuration getPushNotificationsBeacon] == NO){
+        [Configuration setPushNotificationsBeacon:YES];
+        [Sw_PushNotificationBeaconSet setOn:YES animated:YES];
+    }else{
+        [Configuration setPushNotificationsBeacon:NO];
+        [Sw_PushNotificationBeaconSet setOn:NO animated:YES];
     }
 }
 

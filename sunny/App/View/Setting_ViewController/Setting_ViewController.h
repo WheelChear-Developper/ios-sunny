@@ -12,12 +12,14 @@
 
 @interface Setting_ViewController : UITableViewController
 {
-    IBOutlet UISwitch *Sw_PushNotificationSet;
+    IBOutlet UISwitch *Sw_PushNotificationNewsSet;
+    IBOutlet UISwitch *Sw_PushNotificationBeaconSet;
     __weak IBOutlet UILabel *lbl_userID;
     __weak IBOutlet UITextField *txt_userName;
     
     NSString *str_BackupName;
 }
-- (IBAction)Sw_PushNotificationSet:(id)sender;
+- (IBAction)Sw_PushNotificationNewsSet:(id)sender;
+- (IBAction)Sw_PushNotificationBeaconSet:(id)sender;
 @property (nonatomic,retain)NSMutableData *mData;
 @end

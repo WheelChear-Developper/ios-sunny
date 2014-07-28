@@ -16,12 +16,5 @@
 
 - (IBAction)btn_tel1:(id)sender;
 - (IBAction)btn_tel2:(id)sender;
-- (IBAction)btn_tel3:(id)sender;
-- (IBAction)btn_tel4:(id)sender;
-- (IBAction)btn_web1:(id)sender;
-- (IBAction)btn_web2:(id)sender;
 @property (weak, nonatomic) IBOutlet MKMapView *map_view1;
-@property (weak, nonatomic) IBOutlet MKMapView *map_view2;
-@property (weak, nonatomic) IBOutlet MKMapView *map_view3;
-
 @end

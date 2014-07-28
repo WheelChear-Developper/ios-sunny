@@ -17,8 +17,6 @@
 @implementation Shop_ViewController
 
 @synthesize map_view1;
-@synthesize map_view2;
-@synthesize map_view3;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,8 +42,8 @@
     self.view.backgroundColor = [SetColor setBackGroundColor];
 
     CLLocationCoordinate2D co1;
-    co1.latitude = 34.085927; // 経度
-    co1.longitude = 134.500087; // 緯度
+    co1.latitude = 34.070557; // 経度
+    co1.longitude = 134.469068; // 緯度
     MKCoordinateRegion cr1 = map_view1.region;
     cr1.center = co1;
     cr1.span.latitudeDelta = 0.004;
@@ -54,54 +52,17 @@
     
     MyAnnotation *annotation1;
     CLLocationCoordinate2D location1;
-    location1.latitude  = 34.085927;
-    location1.longitude = 134.500087;
+    location1.latitude  = 34.070557;
+    location1.longitude = 134.469068;
     annotation1 =[[MyAnnotation alloc] initWithCoordinate:location1];
-    annotation1.title = @"fiore(フィオーレ本店)";
+    annotation1.title = @"Sunny";
 //    annotation.subtitle = @"";
     [map_view1 addAnnotation:annotation1];
     
-    CLLocationCoordinate2D co2;
-    co2.latitude = 34.069648; // 経度
-    co2.longitude = 134.579328; // 緯度
-    MKCoordinateRegion cr2 = map_view1.region;
-    cr2.center = co2;
-    cr2.span.latitudeDelta = 0.004;
-    cr2.span.longitudeDelta = 0.004;
-    [map_view2 setRegion:cr2 animated:YES];
-    
-    MyAnnotation *annotation2;
-    CLLocationCoordinate2D location2;
-    location2.latitude  = 34.069648;
-    location2.longitude = 134.579328;
-    annotation2 =[[MyAnnotation alloc] initWithCoordinate:location2];
-    annotation2.title = @"fiore(フィオーレ安宅店)";
-    //    annotation.subtitle = @"";
-    [map_view2 addAnnotation:annotation2];
-    
-    CLLocationCoordinate2D co3;
-    co3.latitude = 34.047454; // 経度
-    co3.longitude = 134.569813; // 緯度
-    MKCoordinateRegion cr3 = map_view1.region;
-    cr3.center = co3;
-    cr3.span.latitudeDelta = 0.004;
-    cr3.span.longitudeDelta = 0.004;
-    [map_view3 setRegion:cr3 animated:YES];
-    
-    MyAnnotation *annotation3;
-    CLLocationCoordinate2D location3;
-    location3.latitude  = 34.047454;
-    location3.longitude = 134.569813;
-    annotation3 =[[MyAnnotation alloc] initWithCoordinate:location3];
-    annotation3.title = @"スリムサポート みらくる";
-    //    annotation.subtitle = @"";
-    [map_view3 addAnnotation:annotation3];
 }
 
 - (void)dealloc {
     map_view1 = nil;
-    map_view2 = nil;
-    map_view3 = nil;
     self.tableView = nil;
 }
 
@@ -109,6 +70,9 @@
 {
     switch(section){
         case 1:{
+            return 44;
+        }
+        case 2:{
             return 44;
         }
         default:{
@@ -139,6 +103,12 @@
             [headerView addSubview:title];
             break;
         }
+        case 2:{
+            [headerView addSubview:headerImageView];
+            title.text = @"スキンケア会員大募集！";
+            [headerView addSubview:title];
+            break;
+        }
         default:{
             break;
         }
@@ -149,36 +119,14 @@
 
 - (IBAction)btn_tel1:(id)sender
 {
-    NSURL *phone = [NSURL URLWithString:@"tel://0886785548"];
+    NSURL *phone = [NSURL URLWithString:@"tel://0120642305"];
     [[UIApplication sharedApplication] openURL:phone];
 }
 
 - (IBAction)btn_tel2:(id)sender
 {
-    NSURL *phone = [NSURL URLWithString:@"tel://0120142362"];
+    NSURL *phone = [NSURL URLWithString:@"tel://0886261875"];
     [[UIApplication sharedApplication] openURL:phone];
-}
-
-- (IBAction)btn_tel3:(id)sender
-{
-    NSURL *phone = [NSURL URLWithString:@"tel://0886788872"];
-    [[UIApplication sharedApplication] openURL:phone];
-}
-
-- (IBAction)btn_tel4:(id)sender
-{
-    NSURL *phone = [NSURL URLWithString:@"tel://0120309362"];
-    [[UIApplication sharedApplication] openURL:phone];
-}
-
-- (IBAction)btn_web1:(id)sender
-{
-    [Configuration setWebURL:@"http://www.ssb-group.jp/newlycategory_8"];
-}
-
-- (IBAction)btn_web2:(id)sender
-{
-    [Configuration setWebURL:@"http://www.ssb-group.jp/newlycategory_6"];
 }
 
 @end
