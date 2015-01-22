@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="nKX-AD-l3U">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="nKX-AD-l3U">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--MainUI Tab Bar Controller-->
@@ -58,7 +58,7 @@
             </objects>
             <point key="canvasLocation" x="819" y="-837"/>
         </scene>
-        <!--Navigation Controller - ニュース-->
+        <!--ニュース-->
         <scene sceneID="8TA-L2-URN">
             <objects>
                 <navigationController definesPresentationContext="YES" id="3s1-a0-JXQ" sceneMemberID="viewController">
@@ -78,13 +78,12 @@
             </objects>
             <point key="canvasLocation" x="285" y="-837"/>
         </scene>
-        <!--Navigation Controller - メニュー-->
+        <!--メニュー-->
         <scene sceneID="2aZ-Eu-Qzb">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Nbc-vd-L98" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="メニュー" id="A1K-Iu-LL6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="rJg-VG-o0b">
-                        <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -823,7 +822,7 @@
             </objects>
             <point key="canvasLocation" x="1418" y="1930"/>
         </scene>
-        <!--Navigation Controller - その他-->
+        <!--その他-->
         <scene sceneID="M0a-wv-dDv">
             <objects>
                 <navigationController definesPresentationContext="YES" id="o32-eB-891" sceneMemberID="viewController">
@@ -839,7 +838,7 @@
             </objects>
             <point key="canvasLocation" x="285" y="1930"/>
         </scene>
-        <!--Navigation Controller - 店舗情報-->
+        <!--店舗情報-->
         <scene sceneID="R3E-5w-wCA">
             <objects>
                 <navigationController definesPresentationContext="YES" id="M3n-ho-6nm" sceneMemberID="viewController">
@@ -1726,7 +1725,7 @@
             </objects>
             <point key="canvasLocation" x="814" y="-157"/>
         </scene>
-        <!--Navigation Controller - ポイント-->
+        <!--ポイント-->
         <scene sceneID="Gon-Xb-iXx">
             <objects>
                 <navigationController definesPresentationContext="YES" id="DIV-FA-7Ch" sceneMemberID="viewController">

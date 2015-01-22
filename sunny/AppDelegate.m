@@ -20,9 +20,20 @@
     [SqlManager InitialSql];
     
     // push通知呼び出し用
-    [application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge|
-                                                      UIRemoteNotificationTypeSound|
-                                                      UIRemoteNotificationTypeAlert)];
+    float iOSVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    NSLog(@"iOS %f", iOSVersion);
+    if(iOSVersion >= 8.0)
+    {
+        // push通知呼び出し用
+        UIUserNotificationType types =    UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+        [application registerUserNotificationSettings:mySettings];
+    }else{
+        // push通知呼び出し用
+        [application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge|
+                                                          UIRemoteNotificationTypeSound|
+                                                          UIRemoteNotificationTypeAlert)];
+    }
     
     //バックグラウンド処理の登録
 	[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -78,6 +89,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    [application registerForRemoteNotifications];
 }
 
 // デバイストークン取得成功
@@ -148,5 +164,43 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     //サーバー情報同期処理
     [SqlManager set_BeconLogList_serverReUp];
 }
+
+///////////////////////// ↓　通信用メソッド　↓　//////////////////////////////
+//通信開始時に呼ばれる
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    //初期化
+    self.mData = [NSMutableData data];
+}
+
+//通信中常に呼ばれる
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    //通信したデータを入れていきます
+    [self.mData appendData:data];
+}
+
+//通信終了時に呼ばれる
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSError *error = nil;
+    //値の取得
+    id json = [NSJSONSerialization JSONObjectWithData:self.mData options:NSJSONReadingAllowFragments error:&error];
+    NSMutableArray *jsonParser = (NSMutableArray*)json;
+    
+    NSLog(@"デバイストークン登録 = %@",jsonParser);
+    
+    if(![[jsonParser valueForKey:@"message"] isEqualToString:@"failure"]){
+        NSLog(@"ユーザー情報を取得できませんでした。"); 
+    }
+}
+
+//通信エラー時に呼ばれる
+-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    
+}
+
+///////////////////////// ↑　通信用メソッド　↑　//////////////////////////////
 
 @end

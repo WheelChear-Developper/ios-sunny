@@ -68,6 +68,12 @@
     
     // リンクタグ解析をしないようにする
     Web_View.dataDetectorTypes = UIDataDetectorTypeNone;
+}
+
+// 起動・再開の時に起動するメソッド
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     // 本体データ取得
     Web_View.scalesPageToFit = YES;
@@ -75,12 +81,6 @@
     NSURL *URL_STRING = [NSURL URLWithString:str_URL];
     url_req = [NSURLRequest requestWithURL:URL_STRING cachePolicy: NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60.0];
     [self netConnected];
-}
-
-// 起動・再開の時に起動するメソッド
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
 }
 
 // 画面の表示の時に起動するメソッド
@@ -142,7 +142,8 @@
     [SVProgressHUD dismiss];
     
     NSLog(@"Errcode_%ld",(long)error.code);
-    if(!error.code == NSURLErrorCancelled){
+    if(error.code == NSURLErrorCancelled){
+    }else{
         bln_download = NO;
         // 通信エラーメッセージ表示
         UIAlertView *errAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Dialog_IntenetNotConnectTitleMsg",@"")

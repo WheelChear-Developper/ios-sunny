@@ -20,6 +20,12 @@
     NSString *str_SerchBeaconMiner;
     
     UIAlertView *beaconAlert;
+    
+    UITabBarItem *tabBarItem1;
+    UITabBarItem *tabBarItem2;
+    UITabBarItem *tabBarItem3;
+    UITabBarItem *tabBarItem4;
+    UITabBarItem *tabBarItem5;
 }
 //ロケーションマネージャー
 @property (nonatomic) CLLocationManager *locationManager;
@@ -63,16 +69,33 @@ CLBeacon *nearestBeacon;
     
     //タブバーインスタンス
     tabBar = self.tabBar;
+    tabBarItem1 = [tabBar.items objectAtIndex:0];
+    tabBarItem2 = [tabBar.items objectAtIndex:1];
+    tabBarItem3 = [tabBar.items objectAtIndex:2];
+    tabBarItem4 = [tabBar.items objectAtIndex:3];
+    tabBarItem5 = [tabBar.items objectAtIndex:4];
     
-    [[tabBar.items objectAtIndex:0] setFinishedSelectedImage:[UIImage imageNamed:@"news_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"news_off.png"]];
-    [[tabBar.items objectAtIndex:1] setFinishedSelectedImage:[UIImage imageNamed:@"menu_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"menu_off.png"]];
-    [[tabBar.items objectAtIndex:2] setFinishedSelectedImage:[UIImage imageNamed:@"shop_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"shop_off.png"]];
+    tabBarItem1.title = NSLocalizedString(@"Tab_TitleName1",@"");
+    tabBarItem2.title = NSLocalizedString(@"Tab_TitleName2",@"");
+    tabBarItem3.title = NSLocalizedString(@"Tab_TitleName3",@"");
+    tabBarItem4.title = NSLocalizedString(@"Tab_TitleName4",@"");
+    tabBarItem5.title = NSLocalizedString(@"Tab_TitleName5",@"");
+    
+    tabBarItem1.image = [[UIImage imageNamed:@"news_off.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabBarItem1.selectedImage = [[UIImage imageNamed:@"news_on.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabBarItem2.image = [[UIImage imageNamed:@"menu_off.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabBarItem2.selectedImage = [[UIImage imageNamed:@"menu_on.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabBarItem3.image = [[UIImage imageNamed:@"shop_off.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabBarItem3.selectedImage = [[UIImage imageNamed:@"shop_on.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     if([Configuration getPushBeacon] == 0){
-        [[tabBar.items objectAtIndex:3] setFinishedSelectedImage:[UIImage imageNamed:@"stamp_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"stamp_off.png"]];
+        tabBarItem4.image = [[UIImage imageNamed:@"stamp_off.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        tabBarItem4.selectedImage = [[UIImage imageNamed:@"stamp_on.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     }else{
-        [[tabBar.items objectAtIndex:3] setFinishedSelectedImage:[UIImage imageNamed:@"stamp_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"stamp_off_get.png"]];
+        tabBarItem4.image = [[UIImage imageNamed:@"stamp_off.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        tabBarItem4.selectedImage = [[UIImage imageNamed:@"stamp_on_get.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     }
-    [[tabBar.items objectAtIndex:4] setFinishedSelectedImage:[UIImage imageNamed:@"other_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"other_off.png"]];
+    tabBarItem5.image = [[UIImage imageNamed:@"other_off.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabBarItem5.selectedImage = [[UIImage imageNamed:@"other_on.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     //タブ背景・選択背景設定
     [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_background.png"]];
@@ -164,7 +187,8 @@ CLBeacon *nearestBeacon;
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     
     if(tabBarController.selectedIndex == 3){
-        [[tabBar.items objectAtIndex:3] setFinishedSelectedImage:[UIImage imageNamed:@"stamp_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"stamp_off.png"]];
+        tabBarItem4.image = [[UIImage imageNamed:@"stamp_off.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        tabBarItem4.selectedImage = [[UIImage imageNamed:@"stamp_on.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     }
 }
 
@@ -199,6 +223,9 @@ CLBeacon *nearestBeacon;
         [Configuration setProfileName:[jsonParser valueForKeyPath:@"name"]];
         // Token設定(設定されていない場合のみ設定)
         [Configuration setToken:[jsonParser valueForKeyPath:@"token"]];
+        
+    }else{
+        NSLog(@"ユーザー情報を取得できませんでした。");
     }
 }
 

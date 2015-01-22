@@ -14,4 +14,5 @@
     UINavigationController *naviController;
 }
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic,retain)NSMutableData *mData;
 @end
